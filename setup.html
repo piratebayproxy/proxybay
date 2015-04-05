@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Setup a Pirate Bay proxy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="assets/css/bootstrap.css" rel="stylesheet">
+<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="assets/css/docs.css" rel="stylesheet">
+<style>body{background: #282828;}.footer{background-color: #282828;}</style>
+<link rel="image_src" href="assets/img/piratebaylogo.gif">
+<link href="assets/ico/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<meta name="description" content="Setup a Pirate Bay proxy site to help others bypass the block.">
+<meta name="keywords" content="pirate, bay, proxy, list, setup, bypass, thepiratebay.se, proxybay.info, piratebay, blocked, unblocked, censorship, brein, bpi">
+</head>
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar-inner">
+<div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</a>
+<a class="brand" href="https://proxybay.info">The Proxy Bay</a>
+<div class="nav-collapse collapse">
+<ul class="nav">
+<li><a href="index.html"><i class="icon-home"></i> Home</a></li>
+<li><a href="alternate-methods.html"><i class="icon-th"></i> Alternate methods</a></li>
+<li class="active"><a href="setup.html"><i class="icon-wrench"></i> Setup a Proxy</a></li>
+<li><a href="submit.html"><i class="icon-plus"></i> Submit a Proxy</a></li>
+<li><a href="contact.html"><i class="icon-user"></i> Contact</a></li></ul></div></div></div></div>
+<div class="container">
+<div class="row">
+<div class="span3 bs-docs-sidebar">
+<ul class="nav nav-list bs-docs-sidenav">
+<li><a href="#Overview"><i class="icon-chevron-right"></i> Overview</a></li>
+<li><a href="#Nginx"><i class="icon-chevron-right"></i> NGINX</a></li>
+<li><a href="#Apache"><i class="icon-chevron-right"></i> Apache</a></li>
+<li><a href="#PHP"><i class="icon-chevron-right"></i> PHP</a></li>
+<li><a href="#openbay"><i class="icon-chevron-right"></i> Openbay</a></li>
+<li><a href="#Tips"><i class="icon-chevron-right"></i> Tips</a></li>
+<li><a href="#what-next"><i class="icon-chevron-right"></i> Next steps</a></li>
+</ul>
+</div>
+<div style="margin-top:30px;" class="span9">
+<section class="hero-unit" id="Overview">
+<div class="page-header">
+<h1>Overview</h1>
+</div>
+<p>This guide will explain how to set up your own Pirate Bay proxy site.  A proxy site will help users in countries where The Pirate Bay has been blocked.  Many ISP's in countries such as the United Kingdom and The Netherlands have been forced to block The Pirate Bay.</p>
+<p>For most of the article we'll be using a web server called <a href="http://wiki.nginx.org/" target="_blank">Nginx</a>. It has been tested on Red Hat based and Debian based distributions but it works on pretty much all UNIX-based systems. Your server should not have anything else running on port 80 though, and of course it needs sufficient bandwidth. Don't use a precompiled binary from your distributions repos though as it will not have all the required modules. You can get good value VPS servers for next to nothing these days that will be more than capable of running it, ours costs less than &pound;5 per month.</p>
+<p>There is also a PHP script that proxies The Pirate Bay that has been designed specifically for this, and can be used on web hosting packages (i.e. does not require a server dedicated to it). If you are planning on doing this, make sure you aren't violating any terms of service that your provider has.</p>
+</section>
+<section class="hero-unit" id="Nginx">
+<div class="page-header">
+<h1>NGINX</h1>
+</div>
+<p>1. Once you've got your server set up and online you'll want to get nginx installed.</p>
+<p>a) If you're using a Debian based OS (e.g. Ubuntu), run this:</p>
+<pre><code class="notranslate">apt-get install libpcre3 libpcre3-dev zlib1g zlib1g-dev openssl gcc make subversion</code></pre>
+<p>b) If you're using a Red Hat based OS (e.g. Centos), run this:</p>
+<pre><code class="notranslate">yum install pcre-devel zlib-devel openssl-devel gcc make subversion</code></pre>
+<p>2. Download the source. You can find the latest version <a href="http://nginx.org/en/download.html" target="_blank">here</a>.</p>
+<pre><code class="notranslate">wget http://nginx.org/download/nginx-1.6.2.tar.gz</code></pre>
+<p>3. Download the substitutions4nginx source using subversion.</p>
+<pre><code class="notranslate">svn checkout http://substitutions4nginx.googlecode.com/svn/trunk/ substitutions4nginx-read-only</code></pre>
+<p>4. Extract the source.</p>
+<pre><code class="notranslate">tar xzvf nginx-1.6.2.tar.gz
+cd nginx-1.6.2</code></pre>
+<p>5. Get ready to compile by configuring. Change the path of the substitutions4nginx-read-only directory to where you've downloaded it to. If you haven't changed the path and are logged in as root it'll probably be /root/substitutions4nginx-read-only/</p>
+<pre><code class="notranslate">./configure --with-http_ssl_module --add-module=/path/to/substitutions4nginx-read-only</code></pre>
+<p>6. Compile it. It'll be installed to /usr/local/nginx/ by default.</p>
+<pre><code class="notranslate">make
+make install</code></pre>
+<p>7. Test nginx is working by starting it then typing in your server IP in your web browser. You should see the "Welcome to nginx!" message.</p>
+<pre><code class="notranslate">cd /usr/local/nginx/
+./sbin/nginx</code></pre>
+<p>8. If it's working, we'll stop it so we can configure it.</p>
+<pre><code class="notranslate">./sbin/nginx -s stop</code></pre>
+<p>9. Rename the default config file so we've got a copy just in case something isn't quite right.</p>
+<pre><code class="notranslate">cd conf
+mv nginx.conf nginx.conf-backup</code></pre>
+<p>10. Copy the following config and insert it into nginx.conf</p>
+<pre><code>#Change to number of CPU's on server
+worker_processes 1;
+events {
+  worker_connections 1024;
+}
+http {
+  include  mime.types;
+  default_type application/octet-stream;
+  sendfile on;
+  gzip on;
+  server {
+    listen 80;
+
+    #Change to your domain name
+    server_name yourdomain.com;
+    location / {
+      proxy_pass https://thepiratebay.se/;
+      proxy_set_header Accept-Encoding &quot;&quot;;
+      proxy_set_header Host thepiratebay.se;
+      proxy_set_header CF-Connecting-IP &quot;&quot;; #Required if using Cloudflare
+      
+      #Substitution examples http://wiki.nginx.org/HttpSubsModule
+      subs_filter &#39;&lt;strong id=&quot;howdl&quot;&gt;.*&lt;\/strong&gt;&#39; &#39;&lt;strong id=&quot;howdl&quot;&gt;&lt;a href=&quot;https://proxybay.info&quot;&gt;List of Pirate Bay proxies&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;&#39; r;
+      subs_filter &#39;thepiratebay.se&#39; $host;
+    }
+  }
+}</code></pre>
+<p>11. Test your config works by starting nginx. If there isn't any output then its started. If you get [emerg] errors, something needs changing. Usually the output will point you in the right direction. If you can't figure it out, try searching the internet as there are a lot of resources</p>
+<pre><code class="notranslate">./usr/local/nginx/sbin/nginx</code></pre>
+<p>14. If it works then submit it to The Proxy Bay by going to <a href="submit.html">This Link</a>.</p> 
+<p>15. You can set up an init script to start/stop/reload/restart nginx more easily.  See how <a href="http://wiki.nginx.org/InitScripts">here</a>.  It's also a good idea to make nginx start at boot.  <a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s2-services-chkconfig.html">For Redhat based distros</a> and for <a href="https://www.debian-administration.org/article/28/Making_scripts_run_at_boot_time_with_Debian">Debian based distros</a>.</p>
+</section>
+<section class="hero-unit" id="Apache">
+<div class="page-header">
+<h1>Apache</h1>
+</div>
+<p>If you have a Linux VPS or dedicated server and are running the Apache web server, you can set up a reverse proxy</p>
+<h4>Steps for Debian based systems (E.g. Ubuntu)</h4>
+<p> 1. Install three Apache modules, mod_proxy, mod_proxy_http and deflate.  Enter the following command in your shell</p>
+<pre><code class="notranslate">a2enmod proxy ssl proxy_http headers deflate </code></pre>
+<p> 2. After the two modules have been enabled, you can create a new Virtual Host.  This may differ on your system but on my system, I created a new file:</p>
+<pre><code class="notranslate">sudo nano /etc/apache2/sites-available/yourdomain.com</code></pre>
+<p> 3. Add the following configuration to the file (Replace 'yourdomain.com' with the domain you wish to use):</p>
+<pre><code class="notranslate">&lt;VirtualHost *:80&gt;
+ServerAdmin webmaster@localhost
+ServerName yourdomain.com
+  &lt;Proxy *&gt;
+    Order deny,allow
+    Allow from all
+  &lt;/Proxy&gt;
+  SSLProxyEngine On
+  ProxyRequests off
+  ProxyPassReverseCookieDomain .thepiratebay.se .yourdomain.com
+  ProxyPreserveHost off
+  ProxyPass / https://thepiratebay.se/
+  ProxyPassReverse / https://thepiratebay.se/
+  RequestHeader unset Accept-Encoding
+&lt;Location /&gt;
+  SetInputFilter DEFLATE
+  SetOutputFilter INFLATE
+  AddOutputFilterByType SUBSTITUTE text/html text/css application/x-javascript application/javascript
+&lt;/Location&gt;
+&lt;/VirtualHost&gt;</code></pre>
+<p> 4. Enable the site</p>
+<pre><code class="notranslate">sudo a2ensite yourdomain.com</code></pre>
+<p> 5. Restart Apache</p>
+<pre><code class="notranslate">/etc/init.d/apache2 restart</code></pre>
+<p>The site should now be functioning at your domain.</p>
+<h4>Steps for Red-Hat based systems (e.g. Centos)</h4>
+<p> 1. You will need to enable three Apache modules, mod_ssl, mod_proxy, mod_proxy_html, and deflate. See <a href="https://www.linode.com/docs/websites/apache/apache-2-web-server-on-centos-6#install-apache-modules">this</a> link on how to enable modules.</p>
+<p> 2. After the two modules have been enabled, you can create a new Virtual Host.  This is usually done by going to the /etc/httpd/conf.d/ directory and creating a new file</p>
+<pre><code class="notranslate">nano /etc/httpd/conf.d/yourdomain.conf</code></pre>
+<p> 3. Add the following configuration to the file (Replace 'yourdomain.com' with the domain you wish to use):</p>
+<pre><code class="notranslate">&lt;VirtualHost *:80&gt;
+ServerAdmin webmaster@localhost
+ServerName yourdomain.com
+  &lt;Proxy *&gt;
+    Order deny,allow
+    Allow from all
+  &lt;/Proxy&gt;
+  ProxyRequests off
+  ProxyPassReverseCookieDomain .thepiratebay.se .yourdomain.com
+  ProxyPreserveHost on
+  ProxyPass / https://thepiratebay.se/
+  ProxyPassReverse / https://thepiratebay.se/
+  RequestHeader unset Accept-Encoding
+&lt;Location /&gt;
+  SetInputFilter DEFLATE
+  SetOutputFilter INFLATE
+  AddOutputFilterByType SUBSTITUTE text/html text/css application/x-javascript application/javascript
+&lt;/Location&gt;
+&lt;/VirtualHost&gt;</code></pre>
+<p> 4. Restart Apache</p>
+<pre><code class="notranslate">service httpd restart</code></pre>
+<p>The site should now be functioning at your domain.</p>
+</section>
+<section class="hero-unit" id="PHP">
+<div class="page-header">
+<h1>PHP</h1>
+</div>
+<p>These two PHP scripts are designed specifically for providing access to The Pirate Bay. A great solution if you do not have a server that you can dedicate to the task.  They require PHP5 and cURL.</p>
+<br>
+<h4>PHP-The-Pirate-Bay-Proxy</h4>
+<p>This script uses .htaccess to load the proxy script and modify the URL's.  Therefore, your server will need to run Apache for the .htaccess file to work</p>
+<p>If the script doesn't work, make sure the .htaccess file exists in the same directory as proxy.php.  You can also try removing the RewriteBase line from the htaccess file as well to see if that helps.  Otherwise, try the alternative script below</p>
+<p>To install, just unzip it and upload the files to your web server.</p> 
+<p><a href="https://github.com/piratebayproxy/PHP-The-Pirate-Bay-Proxy">Download here</a></p>
+<br>
+<h4>Unblocked Pirate Bay PHP Script</h4>
+<p>This is another script that proxies The Pirate Bay.  This script does not use .htaccess and is likely to be more compatible with web servers</p>
+<p>Simply upload it to your web host and modify includes/config.php.  You can also customize the home page by editing home.html</p>
+<p><a href="https://github.com/piratebayproxy/UnblockedPiratebayClean">Download here</a></p>
+</section>
+<section class="hero-unit" id="openbay">
+<div class="page-header">
+<h1>Open Bay</h1>
+</div>
+<p>Setting up an OpenBay site is useful if the Pirate Bay is down, otherwise, it is recommended to set up a proxy</p>
+<p>OpenBay allows you to set up a Pirate Bay clone site.  This will essentially create a clone of the pirate bay site and database on your own server.  This is different from a proxy site which connects to a backend site (such as the pirate bay).</p>
+<p>You will need PHP for the basic setup</p>
+<p><strong>For instructions and the code, click here: <a href="https://github.com/isohuntto/openbay">OpenBay</a></strong></p>
+</section>
+<section class="hero-unit" id="Tips">
+<div class="page-header">
+<h1>Tips</h1>
+</div>
+<h3>Find a good Web Host</h3>
+<p>Try looking for a provider that ignores DMCA requests and is not based in the USA or UK.  Some hosts (even in Europe) will honour DMCA takedowns, so it's good to do your research.  Try doing a Google search for keywords such as: offshore, vps, dmca.</p>
+<p>Here are two hosts that I recommend: <a target="_blank" href="https://www.bahnhof.net/">Bahnhof</a> and <a target="_blank" href="http://swedendedicated.com/">Sweden Dedicated</a></p>
+<br>
+<h3>Use a CDN</h3>
+<p>Use a free CDN service such as <a target="_blank" href="https://www.cloudflare.com/">Cloudflare</a> to help speed up your site and lessen the load on your server.  It will also conceal the true location of your server.  Another free CDN provider is <a target="_blank" href="http://www.incapsula.com/">Incapsula</a></p>
+<p><strong>Note:</strong> If you are using Cloudflare, you will need to add <code>proxy_set_header CF-Connecting-IP '';</code> to your Nginx config for it to work.  Otherwise, you will get DNS errors</p>
+<br>
+<h3>Use SSL</h3>
+<p>Aside from protecting the privacy of your users, using SSL can also bypass a lot of blocks from ISP's.  Therefore, it is highly recommended to use SSL for your proxy</p>
+<p>Cloudlfare automatically provides an SSL certificate for your site so you can simply add https in front of your domain.</p>
+<p>If you buy your own certificate, be sure to follow the SSL best practices, such as enabling HSTS and using modern ciphers.  Here is a guide for <a href="https://t37.net/a-poodle-proof-bulletproof-nginx-ssl-configuration.html" target="_blank">NGINX</a></p>
+<br>
+<h3>Use NGINX</h3>
+<p>NGINX is the fastest and most reliable proxy method available.  Otherwise, the Apache method is also a good option.  The PHP scripts should be used if you are unable to setup the other options</p>
+<p>Take a look at the <a href="http://nginx.org/en/docs/" target="_blank">NGINX Documentation</a> to further configure it to your needs</p>
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-optimize-nginx-configuration" target="_blank">Here</a> is a guide on how to optimize NGINX</p>
+<br>
+<h3>Find a good Domain Registrar</h3>
+<p>I recommend <a target="_blank" href="https://www.hover.com/" title="Hover">Hover</a>, <a target="_blank" href="https://www.easydns.com/" title="EasyDNS">EasyDNS</a>, or <a target="_blank" href="https://www.namecheap.com/" title="Namecheap">NameCheap</a>.</p>
+<p>Avoid GoDaddy, Register.com, Network Solutions and Web.com</p>
+<br>
+<h3>Use WHOIS privacy on your domain name</h3>
+<p>When you register a domain name, your billing/registration information usually becomes public in the public WHOIS database.  Therefore, anyone can go on a <a href="http://who.is/" target="_blank">Whois search</a> site and lookup your domain.</p>
+<p>Some domain names do not support WHOIS privacy and will require your contact details to be public.  In that case, you can try inputting fake data.  However, be aware that this might be against the terms of your domain registration.  Here is <a target="_blank" href="http://www.hover.com/blog/why-whois-privacy-is-kind-of-a-big-deal/" title="More Information">More information</a>.</p>
+<br>
+<h3>Get a Free Domain Name</h3>
+<p>Using <a target="_blank" href="https://freedns.afraid.org/">FreeDNS</a>, you can register a free subdomain name (e.g. subdomain.domain.com).  This is free and doesn't require you to register or pay for a regular domain.  However, since it's a subdomain, you don't control the name servers and cannot use it with services like Cloudflare</p>
+<p>Another option is to get a free domain from <a href="http://freenom.com/" target="_blank">Freenom</a>.  Since these are regular domains (e.g. domain.tk), you can set up name servers to point at services such as Cloudflare</p>
+<br>
+<h3>Monitor your site</h3>
+<p>Here are some free options to monitor the uptime of your site: <a target="_blank" href="https://www.montastic.com/">Montastic</a>, <a target="_blank" href="http://www.monitor.us">Monitor.us</a>, <a target="_blank" href="http://uptimerobot.com/">Uptime Robot</a></p>
+</section>
+<section class="hero-unit" id="what-next">
+<div class="page-header">
+<h1>What next?</h1>
+</div>
+<p class="lead">Once you have set up your proxy and can confirm it is working, submit it to The Proxy Bay</p>
+<a class="btn btn-large btn-primary" href="./submit.html" >Submit your proxy</a>
+</section>
+
+</div>
+</div>
+</div>
+
+
+<footer class="footer" style="text-align:center;margin-top:20px;">
+<div class="container">
+<p xmlns:dct="http://purl.org/dc/terms/"><a href="#">Back to top</a>&nbsp;&nbsp;<a rel="license" href="http://creativecommons.org/publicdomain/mark/1.0/">
+<img src="https://i.creativecommons.org/p/mark/1.0/88x31.png"style="border-style: none;" alt="Public Domain Mark" /></a></p>
+</div>
+</footer>
+<script src="assets/js/jquery.js"></script>
+<script src="assets/js/bootstrap-transition.js"></script>
+<script src="assets/js/bootstrap-collapse.js"></script>
+<script src="assets/js/bootstrap-scrollspy.js"></script>
+<script src="assets/js/bootstrap-affix.js"></script>
+<script src="assets/js/application.js"></script>
+</body>
+</html>

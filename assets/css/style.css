@@ -1,0 +1,24 @@
+body {background: #282828}
+#mainContent {text-align: center;color:#fff;font-weight: 200;font-size:16px;line-height: 20px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;}
+a:hover {text-decoration:none;color:#808080;}
+table#searchResult{color:#282828;}
+table#searchResult { font-size: 16px; border-collapse: collapse; margin:0 auto; position: relative; text-align: left;}
+thead#tableHead th { line-height:30px;text-shadow: 0px 1px 0px rgb(211, 211, 211);background: #6D85A3 url(../img/bgHeader.png) repeat-x top; border-top: 1px solid #CDD5DF; border-bottom: 1px solid #2E3744;}
+table#searchResult a:hover{color: #808080; text-decoration: none;}
+table#searchResult a {color:#282828;font: bold 17px Helvetica;text-decoration:none;display:block;padding:10px 0px 10px 12px;}
+table#searchResult th {padding:3px 10px 3px 12px;}
+table#searchResult tr:nth-child(odd) { background: #989898;border-top: 1px solid #B5B5B5;border-bottom: 1px solid #8A8A8A;}
+table#searchResult tr:nth-child(even) { background: #ADADAD;border-top: 1px solid #BFBFBF;border-bottom: 1px solid #9D9D9D;}
+table#searchResult tr:hover { background: #ccc; }
+td.speed {width:75px}
+td.speed,td.country {padding-left:10px;padding-right:10px;color: rgb(60, 60, 60);text-shadow: 0px 1px 0px rgb(211, 211, 211);text-align:center;font-size: 12px;font-weight: bold;text-transform: uppercase;line-height: 24px;}
+.status {text-align:center;}
+.status img {width:16px;height:16px;}
+.score {display:none}
+.footer .hero-unit p {font-size:16px;line-height:normal;}
+#statusDate{font-weight:bold}
+#tpbnotice {width:480px}
+#dateText {font-size:12px}
+#headerLinks a:link {color:#0EBFE9}
+#headerLinks a:hover {color:#999}
+@media only screen and (max-width: 520px){td.speed, td.status, td.score, td.country, td.statusup, td.statusdown {display:none}table#searchResult {width:100%}table thead {display:none} #dateText #tpbnotice{width:auto;font-size:14px;}#noticeimg{display:none}}
