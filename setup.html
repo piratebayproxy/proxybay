@@ -11,7 +11,7 @@
 <link rel="image_src" href="assets/img/piratebaylogo.gif">
 <link href="assets/ico/favicon.ico" rel="shortcut icon" type="image/x-icon">
 <meta name="description" content="Setup a Pirate Bay proxy site to help others bypass the block.">
-<meta name="keywords" content="pirate, bay, proxy, list, setup, bypass, thepiratebay.se, proxybay.info, piratebay, blocked, unblocked, censorship, brein, bpi">
+<meta name="keywords" content="pirate, bay, proxy, list, setup, bypass, thepiratebay.se, proxybay.co, piratebay, blocked, unblocked, censorship, brein, bpi">
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <div class="navbar navbar-inverse navbar-fixed-top">
@@ -22,7 +22,7 @@
 <span class="icon-bar"></span>
 <span class="icon-bar"></span>
 </a>
-<a class="brand" href="https://proxybay.info">The Proxy Bay</a>
+<a class="brand" href="https://proxybay.co">The Proxy Bay</a>
 <div class="nav-collapse collapse">
 <ul class="nav">
 <li><a href="index.html"><i class="icon-home"></i> Home</a></li>
@@ -104,7 +104,7 @@ http {
       proxy_set_header CF-Connecting-IP &quot;&quot;; #Required if using Cloudflare
       
       #Substitution examples http://wiki.nginx.org/HttpSubsModule
-      subs_filter &#39;&lt;strong id=&quot;howdl&quot;&gt;.*&lt;\/strong&gt;&#39; &#39;&lt;strong id=&quot;howdl&quot;&gt;&lt;a href=&quot;https://proxybay.info&quot;&gt;List of Pirate Bay proxies&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;&#39; r;
+      subs_filter &#39;&lt;strong id=&quot;howdl&quot;&gt;.*&lt;\/strong&gt;&#39; &#39;&lt;strong id=&quot;howdl&quot;&gt;&lt;a href=&quot;https://proxybay.co&quot;&gt;List of Pirate Bay proxies&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;&#39; r;
       subs_filter &#39;thepiratebay.se&#39; $host;
     }
   }
