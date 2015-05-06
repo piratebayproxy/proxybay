@@ -94,7 +94,7 @@ var h = document.getElementsByClassName('site');
 for(var i=0;i<a.length;i++){
 if(h[i].childNodes[0].href.match(/^https/)){h[i].childNodes[0].innerHTML=h[i].childNodes[0].innerHTML+' <img src="https://proxybay.co/assets/img/secure.gif" width="16" height="16">'}
 var speed=parseFloat(a[i].innerHTML);
-if(speed<1.500){a[i].innerHTML='<span title="Loaded in '+a[i].innerHTML+' seconds">Very Fast</span>';}
+if(speed<=1.500){a[i].innerHTML='<span title="Loaded in '+a[i].innerHTML+' seconds">Very Fast</span>';}
 else if(speed>1.500 && speed<=2.500){a[i].innerHTML='<span title="Loaded in '+a[i].innerHTML+' seconds">Fast</span>';}
 else if(speed>2.500 && speed<=5.000){a[i].innerHTML='<span title="Loaded in '+a[i].innerHTML+' seconds">Average</span>';}
 else if(speed>5.000){a[i].innerHTML='<span title="Loaded in '+a[i].innerHTML+' seconds">Slow</span>';}}}
