@@ -11,7 +11,7 @@
 <link rel="image_src" href="assets/img/piratebaylogo.gif">
 <link href="assets/ico/favicon.ico" rel="shortcut icon" type="image/x-icon">
 <meta name="description" content="Setup a Pirate Bay proxy site to help others bypass the block.">
-<meta name="keywords" content="pirate, bay, proxy, list, setup, bypass, thepiratebay.se, proxybay.co, piratebay, blocked, unblocked, censorship, brein, bpi">
+<meta name="keywords" content="pirate, bay, proxy, list, setup, bypass, thepiratebay.la, proxybay.co, piratebay, blocked, unblocked, censorship, brein, bpi">
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <div class="navbar navbar-inverse navbar-fixed-top">
@@ -98,16 +98,16 @@ http {
     #Change to your domain name
     server_name yourdomain.com;
     location / {
-      proxy_pass https://thepiratebay.se/;
+      proxy_pass https://thepiratebay.la/;
       proxy_set_header Accept-Encoding &quot;&quot;;
-      proxy_set_header Host thepiratebay.se;
+      proxy_set_header Host thepiratebay.la;
       proxy_set_header CF-Connecting-IP &quot;&quot;; #Required if using Cloudflare
       proxy_ssl_verify off; 
       proxy_ssl_server_name on;
       
       ##Search and replace using regular expressions.  More examples http://wiki.nginx.org/HttpSubsModule
       subs_filter &#39;&lt;strong id=&quot;howdl&quot;&gt;.*&lt;\/strong&gt;&#39; &#39;&lt;strong id=&quot;howdl&quot;&gt;&lt;a href=&quot;https://proxybay.co&quot;&gt;List of Pirate Bay proxies&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;&#39; r;
-      subs_filter &#39;thepiratebay.se&#39; $host;
+      subs_filter &#39;thepiratebay.la&#39; $host;
     }
   }
 }</code></pre>
@@ -136,10 +136,10 @@ ServerName yourdomain.com
   &lt;/Proxy&gt;
   SSLProxyEngine On
   ProxyRequests off
-  ProxyPassReverseCookieDomain .thepiratebay.se .yourdomain.com
+  ProxyPassReverseCookieDomain .thepiratebay.la .yourdomain.com
   ProxyPreserveHost off
-  ProxyPass / https://thepiratebay.se/
-  ProxyPassReverse / https://thepiratebay.se/
+  ProxyPass / https://thepiratebay.la/
+  ProxyPassReverse / https://thepiratebay.la/
   RequestHeader unset Accept-Encoding
 &lt;Location /&gt;
   SetInputFilter DEFLATE
@@ -165,10 +165,10 @@ ServerName yourdomain.com
     Allow from all
   &lt;/Proxy&gt;
   ProxyRequests off
-  ProxyPassReverseCookieDomain .thepiratebay.se .yourdomain.com
+  ProxyPassReverseCookieDomain .thepiratebay.la .yourdomain.com
   ProxyPreserveHost on
-  ProxyPass / https://thepiratebay.se/
-  ProxyPassReverse / https://thepiratebay.se/
+  ProxyPass / https://thepiratebay.la/
+  ProxyPassReverse / https://thepiratebay.la/
   RequestHeader unset Accept-Encoding
 &lt;Location /&gt;
   SetInputFilter DEFLATE
