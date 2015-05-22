@@ -26,3 +26,4 @@ td.speed,td.country {padding-left:10px;padding-right:10px;color: rgb(60, 60, 60)
     #closeBtn {color: #000; float: right; margin-right: 5px; margin-top: 5px; font-size: 20px; text-decoration: none; padding: 0px 3px 0px 3px; }
   .feedback{ position: fixed; bottom: -2px; right: 25px; background-color:#ededed; border:2px solid #1B1B1B; display:inline-block; color:#1B1B1B; font-family:Arial; font-size:16px; font-weight:bold; height:36px; line-height:36px; width:258px; text-decoration:none; text-align:center; text-shadow:0px 0px 0px #ffffff; }
   .feedback:hover { background-color:#dfdfdf; }
+#feedbackFrame{border: 0px;overflow:hidden;}
