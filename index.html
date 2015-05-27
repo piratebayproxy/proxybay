@@ -99,7 +99,7 @@ else if(speed>2.500 && speed<=5.000){a[i].innerHTML='<span title="Loaded in '+a[
 else if(speed>5.000){a[i].innerHTML='<span title="Loaded in '+a[i].innerHTML+' seconds">Slow</span>';}}}
 </script><script src="assets/js/jquery.js"></script><script src="assets/js/bootstrap-transition.js"></script><script src="assets/js/bootstrap-collapse.js"></script>
 <script type="text/javascript">
-$.get('check/status.txt',function(data){if(!data.match(/good/i)){$('#dateText').html(data);$('.status').each(function(){this.innerHTML='<img alt="down" src="assets/img/down.png">';});}});
+$.get('status.txt',function(data){if(!data.match(/good/i)){$('#dateText').html(data);$('.status').each(function(){this.innerHTML='<img alt="down" src="assets/img/down.png">';});}});
 $('#speedCol').click(function(){$('.speed').each(function(i,j){var s=$(this).children('span').attr('title'); if(s){s=String(s).match(/[0-9.]+/)[0]; $(this).children('span').html(s)}})});
 function openform() {document.getElementById('feedbackForm').style.display='block';document.getElementById('feedbackFrame').src='https://s.proxybay.co/pb.php';document.getElementById('feedbackBtn').style.display='none';}
 function closeform(){document.getElementById('feedbackForm').style.display='none';document.getElementById('feedbackFrame').src='';document.getElementById('feedbackBtn').style.display='block';}
