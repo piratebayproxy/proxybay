@@ -18,7 +18,8 @@ td.speed,td.country {padding-left:10px;padding-right:10px;color: rgb(60, 60, 60)
 .footer .hero-unit p {font-size:16px;line-height:normal;}
 #statusDate{font-weight:bold}
 #tpbnotice {width:480px}
-#dateText {font-size:12px}
+#dateText {font-size:14px}
+#dateText a {color:#0EBFE9}
 #headerLinks a:link {color:#0EBFE9}
 #headerLinks a:hover {color:#999}
 @media only screen and (max-width: 520px){td.speed, td.status, td.score, td.country, td.statusup, td.statusdown {display:none}table#searchResult {width:100%}table thead {display:none} #dateText #tpbnotice{width:auto;font-size:14px;}#noticeimg{display:none}}
