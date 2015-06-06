@@ -118,6 +118,8 @@ http {
       proxy_set_header Accept-Encoding &#39;&#39;;
       proxy_set_header CF-Connecting-IP &#39;&#39;;
       proxy_set_header Host piratebay.org;
+      proxy_ssl_verify off;
+      proxy_ssl_server_name on;
       subs_filter_types text/css;
       subs_filter &#39;https://piratebay.org&#39; &quot;//$host/pborg&quot;;
     }
