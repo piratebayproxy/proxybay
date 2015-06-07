@@ -36,9 +36,7 @@
 <ul class="nav nav-list bs-docs-sidenav">
 <li><a href="#Overview"><i class="icon-chevron-right"></i> Overview</a></li>
 <li><a href="#Nginx"><i class="icon-chevron-right"></i> NGINX</a></li>
-<li><a href="#Apache"><i class="icon-chevron-right"></i> Apache</a></li>
 <li><a href="#PHP"><i class="icon-chevron-right"></i> PHP</a></li>
-<li><a href="#openbay"><i class="icon-chevron-right"></i> Openbay</a></li>
 <li><a href="#Tips"><i class="icon-chevron-right"></i> Tips</a></li>
 <li><a href="#what-next"><i class="icon-chevron-right"></i> Next steps</a></li>
 </ul>
@@ -82,8 +80,8 @@ make install</code></pre>
 <p>9. Rename the default config file so we've got a copy just in case something isn't quite right.</p>
 <pre><code class="notranslate">cd conf
 mv nginx.conf nginx.conf-backup</code></pre>
-<p>10. Copy the following config and insert it into nginx.conf (Updated May 31, 2015)</p>
-<pre><code class="notranslate">#Change to number of CPU's on server
+<p>10. Copy the following config and insert it into nginx.conf <strong>(Updated May 31, 2015)</strong></p>
+<pre><code class="notranslate">#Change worker_processes to number of CPU's on server
 worker_processes 1;
 events {
   worker_connections 1024;
@@ -95,24 +93,21 @@ http {
   gzip on;
   server {
     listen 80;
-
-    #Change to your domain name
     server_name yourdomain.com;
+
     location / {
       proxy_pass https://thepiratebay.la/;
       proxy_set_header Accept-Encoding &quot;&quot;;
       proxy_set_header Host thepiratebay.la;
-      proxy_set_header CF-Connecting-IP &quot;&quot;; #Required if using Cloudflare
+      proxy_set_header CF-Connecting-IP &quot;&quot;;
       proxy_ssl_verify off;
       proxy_ssl_server_name on;
 
-      ##Search and replace using regular expressions.  More examples http://wiki.nginx.org/HttpSubsModule
       subs_filter &#39;&lt;strong id=&quot;howdl&quot;&gt;.*&lt;\/strong&gt;&#39; &#39;&lt;strong id=&quot;howdl&quot;&gt;&lt;a href=&quot;https://proxybay.co&quot;&gt;List of Pirate Bay proxies&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;&#39; r;
       subs_filter &#39;thepiratebay.la&#39; $host;
       subs_filter &#39;https://piratebay.org&#39; &quot;//$host/pborg&quot;;
     }
 
-    #Proxy static resources from piratebay.org
     location /pborg {
       proxy_pass https://piratebay.org/;
       proxy_set_header Accept-Encoding &#39;&#39;;
@@ -125,74 +120,10 @@ http {
     }
   }
 }</code></pre>
-<p>11. Test your config works by starting nginx. If there isn't any output then its started. If you get [emerg] errors, something needs changing. Usually the output will point you in the right direction. If you can't figure it out, try searching the internet as there are a lot of resources</p>
+<p>11. Test your config works by starting nginx. It's a good idea to make sure nothing else is running on your web port (e.g. Apache).  If you get errors, something needs changing. Usually the output will point you in the right direction. You can also check the error log by going to /usr/local/nginx/logs/.  If you can't figure it out, try searching the internet as there are a lot of resources</p>
 <pre><code class="notranslate">./usr/local/nginx/sbin/nginx</code></pre>
 <p>14. If it works then submit it to The Proxy Bay by going to <a href="submit.html">This Link</a>.</p>
 <p>15. You can set up an init script to start/stop/reload/restart nginx more easily.  See how <a href="http://wiki.nginx.org/InitScripts">here</a>.  It's also a good idea to make nginx start at boot.  <a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s2-services-chkconfig.html">For Redhat based distros</a> and for <a href="https://www.debian-administration.org/article/28/Making_scripts_run_at_boot_time_with_Debian">Debian based distros</a>.</p>
-</section>
-<section class="hero-unit" id="Apache">
-<div class="page-header">
-<h1>Apache</h1>
-</div>
-<p>If you have a Linux VPS or dedicated server and are running the Apache web server, you can set up a reverse proxy</p>
-<h4>Steps for Debian based systems (E.g. Ubuntu)</h4>
-<p> 1. Install three Apache modules, mod_proxy, mod_proxy_http and deflate.  Enter the following command in your shell</p>
-<pre><code class="notranslate">a2enmod proxy ssl proxy_http headers deflate </code></pre>
-<p> 2. After the two modules have been enabled, you can create a new Virtual Host.  This may differ on your system but on my system, I created a new file:</p>
-<pre><code class="notranslate">sudo nano /etc/apache2/sites-available/yourdomain.com</code></pre>
-<p> 3. Add the following configuration to the file (Replace 'yourdomain.com' with the domain you wish to use):</p>
-<pre><code class="notranslate">&lt;VirtualHost *:80&gt;
-ServerAdmin webmaster@localhost
-ServerName yourdomain.com
-  &lt;Proxy *&gt;
-    Order deny,allow
-    Allow from all
-  &lt;/Proxy&gt;
-  SSLProxyEngine On
-  ProxyRequests off
-  ProxyPassReverseCookieDomain .thepiratebay.la .yourdomain.com
-  ProxyPreserveHost off
-  ProxyPass / https://thepiratebay.la/
-  ProxyPassReverse / https://thepiratebay.la/
-  RequestHeader unset Accept-Encoding
-&lt;Location /&gt;
-  SetInputFilter DEFLATE
-  SetOutputFilter INFLATE
-  AddOutputFilterByType SUBSTITUTE text/html text/css application/x-javascript application/javascript
-&lt;/Location&gt;
-&lt;/VirtualHost&gt;</code></pre>
-<p> 4. Enable the site</p>
-<pre><code class="notranslate">sudo a2ensite yourdomain.com</code></pre>
-<p> 5. Restart Apache</p>
-<pre><code class="notranslate">/etc/init.d/apache2 restart</code></pre>
-<p>The site should now be functioning at your domain.</p>
-<h4>Steps for Red-Hat based systems (e.g. Centos)</h4>
-<p> 1. You will need to enable three Apache modules, mod_ssl, mod_proxy, mod_proxy_html, and deflate. See <a href="https://www.linode.com/docs/websites/apache/apache-2-web-server-on-centos-6#install-apache-modules">this</a> link on how to enable modules.</p>
-<p> 2. After the two modules have been enabled, you can create a new Virtual Host.  This is usually done by going to the /etc/httpd/conf.d/ directory and creating a new file</p>
-<pre><code class="notranslate">nano /etc/httpd/conf.d/yourdomain.conf</code></pre>
-<p> 3. Add the following configuration to the file (Replace 'yourdomain.com' with the domain you wish to use):</p>
-<pre><code class="notranslate">&lt;VirtualHost *:80&gt;
-ServerAdmin webmaster@localhost
-ServerName yourdomain.com
-  &lt;Proxy *&gt;
-    Order deny,allow
-    Allow from all
-  &lt;/Proxy&gt;
-  ProxyRequests off
-  ProxyPassReverseCookieDomain .thepiratebay.la .yourdomain.com
-  ProxyPreserveHost on
-  ProxyPass / https://thepiratebay.la/
-  ProxyPassReverse / https://thepiratebay.la/
-  RequestHeader unset Accept-Encoding
-&lt;Location /&gt;
-  SetInputFilter DEFLATE
-  SetOutputFilter INFLATE
-  AddOutputFilterByType SUBSTITUTE text/html text/css application/x-javascript application/javascript
-&lt;/Location&gt;
-&lt;/VirtualHost&gt;</code></pre>
-<p> 4. Restart Apache</p>
-<pre><code class="notranslate">service httpd restart</code></pre>
-<p>The site should now be functioning at your domain.</p>
 </section>
 <section class="hero-unit" id="PHP">
 <div class="page-header">
@@ -210,15 +141,6 @@ ServerName yourdomain.com
 <p>If the script doesn't work, make sure the .htaccess file exists in the same directory as proxy.php.  You can also try removing the RewriteBase line from the htaccess file as well to see if that helps.  Otherwise, try the alternative script below</p>
 <p>To install, just unzip it and upload the files to your web server.</p>
 <p><a href="https://github.com/piratebayproxy/PHP-The-Pirate-Bay-Proxy">Download from Github here</a></p>
-</section>
-<section class="hero-unit" id="openbay">
-<div class="page-header">
-<h1>Open Bay</h1>
-</div>
-<p>Setting up an OpenBay site is useful if the Pirate Bay is down, otherwise, it is recommended to set up a proxy</p>
-<p>OpenBay allows you to set up a Pirate Bay clone site.  This will essentially create a clone of the pirate bay site and database on your own server.  This is different from a proxy site which connects to a backend site (such as the pirate bay).</p>
-<p>You will need PHP for the basic setup</p>
-<p><strong>For instructions and the code, click here: <a href="https://github.com/isohuntto/openbay">OpenBay</a></strong></p>
 </section>
 <section class="hero-unit" id="Tips">
 <div class="page-header">
