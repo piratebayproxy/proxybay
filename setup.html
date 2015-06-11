@@ -81,8 +81,7 @@ make install</code></pre>
 <pre><code class="notranslate">cd conf
 mv nginx.conf nginx.conf-backup</code></pre>
 <p>10. Copy the following config and insert it into nginx.conf <strong>(Updated May 31, 2015)</strong></p>
-<pre><code class="notranslate">#Change worker_processes to number of CPU's on server
-worker_processes 1;
+<pre><code class="notranslate">worker_processes auto;
 events {
   worker_connections 1024;
 }
