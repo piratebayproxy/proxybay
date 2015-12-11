@@ -46,7 +46,7 @@
 <div class="page-header">
 <h1>Overview</h1>
 </div>
-<p><strong>Update - May 31, 2015</strong> - If you're already running a proxy, please update your <a href="#Nginx">NGINX</a> config or <a href="#PHP">PHP</a> script</p>
+<p><strong>Update - Dec 11, 2015</strong> - If you're already running a proxy, please update your <a href="#Nginx">NGINX</a> config or <a href="#PHP">PHP</a> script</p>
 <p>This guide will explain how to set up your own Pirate Bay proxy site.  A proxy site will help users in countries where The Pirate Bay has been blocked.</p>
 <p>For most of the article we'll be using a web server called <a href="http://wiki.nginx.org/" target="_blank">Nginx</a>. NGINX is our recommended method since it is fast, requires few resources, and has many advanced reverse proxy features.  It has been tested on Red Hat based and Debian based distributions but it works on pretty much all UNIX-based systems. Your server should not have anything else running on port 80 though, and of course it needs sufficient bandwidth. Don't use a precompiled binary from your distributions repos (e.g. apt-get install package) since it will not have the required modules.</p>
 <p>There are also two PHP scripts that proxy The Pirate Bay that have been designed specifically for this and can be used on web hosting packages (i.e. does not require a server dedicated to it).</p>
@@ -80,7 +80,7 @@ make install</code></pre>
 <p>9. Rename the default config file so we've got a copy just in case something isn't quite right.</p>
 <pre><code class="notranslate">cd conf
 mv nginx.conf nginx.conf-backup</code></pre>
-<p>10. Copy the following config and insert it into nginx.conf <strong>(Updated May 31, 2015)</strong></p>
+<p>10. Copy the following config and insert it into nginx.conf <strong>(Updated Dec 11, 2015)</strong></p>
 <pre><code class="notranslate">worker_processes auto;
 events {
   worker_connections 1024;
@@ -99,6 +99,7 @@ http {
       proxy_set_header Accept-Encoding &quot;&quot;;
       proxy_set_header Host thepiratebay.la;
       proxy_set_header CF-Connecting-IP &quot;&quot;;
+      proxy_set_header Via &quot;$host&quot;;
       proxy_ssl_verify off;
       proxy_ssl_server_name on;
 
