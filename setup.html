@@ -61,12 +61,12 @@
 <p>b) If you're using a Red Hat based OS (e.g. Centos), run this:</p>
 <pre><code class="notranslate">yum install pcre-devel zlib-devel openssl-devel gcc make subversion</code></pre>
 <p>2. Download the source. You can find the latest version <a href="http://nginx.org/en/download.html" target="_blank">here</a>.</p>
-<pre><code class="notranslate">wget http://nginx.org/download/nginx-1.8.0.tar.gz</code></pre>
+<pre><code class="notranslate">wget http://nginx.org/download/nginx-1.10.0.tar.gz</code></pre>
 <p>3. Download the substitutions4nginx source using subversion.</p>
 <pre><code class="notranslate">svn checkout http://substitutions4nginx.googlecode.com/svn/trunk/ substitutions4nginx-read-only</code></pre>
 <p>4. Extract the source.</p>
-<pre><code class="notranslate">tar xzvf nginx-1.8.0.tar.gz
-cd nginx-1.8.0</code></pre>
+<pre><code class="notranslate">tar xzvf nginx-1.10.0.tar.gz 
+cd nginx-1.10.0</code></pre>
 <p>5. Get ready to compile by configuring. Change the path of the substitutions4nginx-read-only directory to where you've downloaded it to. If you haven't changed the path and are logged in as root it'll probably be /root/substitutions4nginx-read-only/</p>
 <pre><code class="notranslate">./configure --with-http_ssl_module --add-module=/path/to/substitutions4nginx-read-only</code></pre>
 <p>6. Compile it. It'll be installed to /usr/local/nginx/ by default.</p>
