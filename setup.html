@@ -46,7 +46,6 @@
 <div class="page-header">
 <h1>Overview</h1>
 </div>
-<p><strong>Update - May 14, 2016</strong> - If you're already running a proxy, please update your <a href="#Nginx">NGINX</a> config or <a href="#PHP">PHP</a> script</p>
 <p>This guide will explain how to set up your own Pirate Bay proxy site.  A proxy site will help users in countries where The Pirate Bay has been blocked.</p>
 <p>For most of the article we'll be using a web server called <a href="http://wiki.nginx.org/" target="_blank">Nginx</a>. NGINX is our recommended method since it is fast, requires few resources, and has many advanced reverse proxy features.  It has been tested on Red Hat based and Debian based distributions but it works on pretty much all UNIX-based systems. Your server should not have anything else running on port 80 though, and of course it needs sufficient bandwidth. Don't use a precompiled binary from your distributions repos (e.g. apt-get install package) since it will not have the required modules.</p>
 <p>There are also two PHP scripts that proxy The Pirate Bay that have been designed specifically for this and can be used on web hosting packages (i.e. does not require a server dedicated to it).</p>
@@ -57,7 +56,7 @@
 </div>
 <p>1. Once you've got your server set up and online you'll want to get nginx installed.</p>
 <p>a) If you're using a Debian based OS (e.g. Ubuntu), run this:</p>
-<pre><code class="notranslate">apt-get install libpcre3 libpcre3-dev zlib1g zlib1g-dev openssl libssl-dev gcc make subversion</code></pre>
+<pre><code class="notranslate">apt-get install libpcre3 libpcre3-dev zlib1g zlib1g-dev openssl libssl-dev gcc make git</code></pre>
 <p>b) If you're using a Red Hat based OS (e.g. Centos), run this:</p>
 <pre><code class="notranslate">yum install pcre-devel zlib-devel openssl-devel gcc make subversion</code></pre>
 <p>2. Download the source. You can find the latest version <a href="http://nginx.org/en/download.html" target="_blank">here</a>.</p>
@@ -111,7 +110,7 @@ http {
 <p>11. Test your config works by starting nginx. It's a good idea to make sure nothing else is running on your web port (e.g. Apache).  If you get errors, something needs changing. Usually the output will point you in the right direction. You can also check the error log by going to /usr/local/nginx/logs/.  If you can't figure it out, try searching the internet as there are a lot of resources</p>
 <pre><code class="notranslate">./usr/local/nginx/sbin/nginx</code></pre>
 <p>14. If it works then submit it to The Proxy Bay by going to <a href="submit.html">This Link</a>.</p>
-<p>15. You can set up an init script to start/stop/reload/restart nginx more easily.  See how <a href="http://wiki.nginx.org/InitScripts">here</a>.  It's also a good idea to make nginx start at boot.  <a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s2-services-chkconfig.html">For Redhat based distros</a> and for <a href="https://www.debian-administration.org/article/28/Making_scripts_run_at_boot_time_with_Debian">Debian based distros</a>.</p>
+<p>15. You can set up an init script to start/stop/reload/restart nginx more easily.  See how <a href="https://www.nginx.com/resources/wiki/start/topics/examples/initscripts/">here</a>.  It's also a good idea to make nginx start at boot.  <a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s2-services-chkconfig.html">For Redhat based distros</a> and for <a href="https://www.debian-administration.org/article/28/Making_scripts_run_at_boot_time_with_Debian">Debian based distros</a>.</p>
 </section>
 <section class="hero-unit" id="PHP">
 <div class="page-header">
@@ -147,7 +146,7 @@ http {
 <p>If you buy your own certificate, be sure to follow the SSL best practices, such as enabling HSTS and using modern ciphers.  Here is a guide for <a href="https://t37.net/a-poodle-proof-bulletproof-nginx-ssl-configuration.html" target="_blank">NGINX</a></p>
 <br>
 <h3>Use NGINX</h3>
-<p>NGINX is the fastest and most reliable proxy method available.  Otherwise, the Apache method is also a good option.  The PHP scripts should be used if you are unable to setup the other options</p>
+<p>NGINX is the fastest and most reliable proxy method available.  Otherwise, the Apache is also a good option.  The PHP scripts should be used if you are unable to setup the other options</p>
 <p>Take a look at the <a href="http://nginx.org/en/docs/" target="_blank">NGINX Documentation</a> to further configure it to your needs</p>
 <p><a href="https://www.digitalocean.com/community/tutorials/how-to-optimize-nginx-configuration" target="_blank">Here</a> is a guide on how to optimize NGINX</p>
 <br>
