@@ -109,7 +109,7 @@ http {
 <p>11. Test your config works by starting nginx. It's a good idea to make sure nothing else is running on your web port (e.g. Apache).  If you get errors, something needs changing. Usually the output will point you in the right direction. You can also check the error log by going to /usr/local/nginx/logs/.  If you can't figure it out, try searching the internet as there are a lot of resources</p>
 <pre><code class="notranslate">./usr/local/nginx/sbin/nginx</code></pre>
 <p>14. If it works then submit it to The Proxy Bay by going to <a href="submit.html">This Link</a>.</p>
-<p>15. You can set up an init script to start/stop/reload/restart nginx more easily.  See how <a href="https://www.nginx.com/resources/wiki/start/topics/examples/initscripts/">here</a>.  It's also a good idea to make nginx start at boot.  <a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s2-services-chkconfig.html">For Redhat based distros</a> and for <a href="https://www.debian-administration.org/article/28/Making_scripts_run_at_boot_time_with_Debian">Debian based distros</a>.</p>
+<p>15. You can set up an init script to load nginx on boot.  You can find startup scripts for different distributions <a href="https://www.nginx.com/resources/wiki/start/topics/examples/initscripts/">here</a>.  Be sure to change the paths to match where your nginx installation is located</p>  
 </section>
 <section class="hero-unit" id="PHP">
 <div class="page-header">
