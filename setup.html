@@ -99,8 +99,6 @@ http {
       proxy_set_header Accept-Encoding &quot;&quot;;
       proxy_set_header Host thepiratebay.org;
       proxy_set_header CF-Connecting-IP &quot;&quot;;
-      proxy_ssl_verify off;
-      proxy_ssl_server_name on;
 
       subs_filter &#39;&lt;strong id=&quot;howdl&quot;&gt;.*&lt;\/strong&gt;&#39; &#39;&lt;strong id=&quot;howdl&quot;&gt;&lt;a href=&quot;https://proxybay.one&quot;&gt;List of Pirate Bay proxies&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;&#39; r;
       subs_filter &#39;thepiratebay.org&#39; $host;
