@@ -47,8 +47,8 @@
 <div class="page-header">
 <h1>Overview</h1>
 </div>
-<p>This guide will explain how to set up your own Pirate Bay proxy site.  A proxy site will help users in countries where The Pirate Bay has been blocked.</p>
-<p>For most of the article we'll be using a web server called <a href="http://wiki.nginx.org/" target="_blank">Nginx</a>. NGINX is our recommended method since it is fast, requires few resources, and has many advanced reverse proxy features.  It has been tested on Red Hat based and Debian based distributions but it works on pretty much all UNIX-based systems. Your server should not have anything else running on port 80 though, and of course it needs sufficient bandwidth. Don't use a precompiled binary from your distributions repos (e.g. apt-get install package) since it will not have the required modules.</p>
+<p>This guide will explain how to set up your own Pirate Bay proxy site. A proxy site will help users in countries where The Pirate Bay has been blocked.</p>
+<p>For most of the article we'll be using a web server called <a href="http://wiki.nginx.org/" target="_blank">Nginx</a>. NGINX is our recommended method since it is fast, requires few resources, and has many advanced reverse proxy features. It has been tested on Red Hat based and Debian based distributions but it works on pretty much all UNIX-based systems. Your server should not have anything else running on port 80 though, and of course it needs sufficient bandwidth. Don't use a precompiled binary from your distributions repos (e.g. apt-get install package) since it will not have the required modules.</p>
 <p>There are also two PHP scripts that proxy The Pirate Bay that have been designed specifically for this and can be used on web hosting packages (i.e. does not require a server dedicated to it).</p>
 </section>
 <section class="hero-unit" id="Nginx">
@@ -61,26 +61,26 @@
 <p>b) If you're using a Red Hat based OS (e.g. Centos), run this:</p>
 <pre><code class="notranslate">yum install pcre-devel zlib-devel openssl-devel gcc make subversion</code></pre>
 <p>2. Download the source. You can find the latest version <a href="http://nginx.org/en/download.html" target="_blank">here</a>.</p>
-<pre><code class="notranslate">wget http://nginx.org/download/nginx-nginx-1.10.3.tar.gz</code></pre>
+<pre><code class="notranslate">wget https://nginx.org/download/nginx-1.12.2.tar.gz</code></pre>
 <p>3. Download the substitutions4nginx source using subversion.</p>
 <pre><code class="notranslate">git clone git://github.com/yaoweibin/ngx_http_substitutions_filter_module.git</code></pre>
 <p>4. Extract the source.</p>
-<pre><code class="notranslate">tar xzvf nginx-nginx-1.10.3.tar.gz 
+<pre><code class="notranslate">tar xzvf nginx-1.12.2.tar.gz 
 cd nginx-nginx-1.10.3</code></pre>
 <p>5. Get ready to compile by configuring. Change the path of the ngx_http_substitutions_filter_module directory to where you've downloaded it to. If you haven't changed the path and are logged in as root it'll probably be /root/ngx_http_substitutions_filter_module/</p>
 <pre><code class="notranslate">./configure --with-http_ssl_module --add-module=/path/to/ngx_http_substitutions_filter_module</code></pre>
 <p>6. Compile it. It'll be installed to /usr/local/nginx/ by default.</p>
 <pre><code class="notranslate">make
 make install</code></pre>
-<p>7. Test nginx is working by starting it then typing in your server IP in your web browser. You should see the "Welcome to nginx!" message.</p>
-<pre><code class="notranslate">cd /usr/local/nginx/
-./sbin/nginx</code></pre>
+<p>7. Test if nginx is working by starting it and then typing in your server IP in your web browser. You should see the "Welcome to nginx!" message.</p>
+<p><strong>Note:</strong> If logged in as root, you don't need the sudo command</p>
+<pre><code class="notranslate">sudo /usr/local/nginx/sbin/nginx</code></pre>
 <p>8. If it's working, we'll stop it so we can configure it.</p>
-<pre><code class="notranslate">./sbin/nginx -s stop</code></pre>
-<p>9. Rename the default config file so we've got a copy just in case something isn't quite right.</p>
-<pre><code class="notranslate">cd conf
+<pre><code class="notranslate">sudo /usr/local/nginx/sbin/nginx -s stop</code></pre>
+<p>9. Rename the default config file so we've got a copy of the original config</p>
+<pre><code class="notranslate">cd /usr/local/nginx/conf
 mv nginx.conf nginx.conf-backup</code></pre>
-<p>10. Copy the following config and insert it into nginx.conf</p>
+<p>10. Copy the following config and insert it into nginx.conf using a text editor such as nano or vi. (e.g. nano nginx.conf)</p>
 <pre><code class="notranslate">worker_processes auto;
 events {
   worker_connections 1024;
@@ -105,26 +105,26 @@ http {
     }
   }
 }</code></pre>
-<p>11. Test your config works by starting nginx. It's a good idea to make sure nothing else is running on your web port (e.g. Apache).  If you get errors, something needs changing. Usually the output will point you in the right direction. You can also check the error log by going to /usr/local/nginx/logs/.  If you can't figure it out, try searching the internet as there are a lot of resources</p>
-<pre><code class="notranslate">./usr/local/nginx/sbin/nginx</code></pre>
+<p>11. Test your config works by starting nginx. It's a good idea to make sure nothing else is running on your web port (e.g. Apache). If you get errors, something needs changing. Usually the output will point you in the right direction. You can also check the error log by going to /usr/local/nginx/logs/. If you can't figure it out, try searching the internet as there are a lot of resources</p>
+<pre><code class="notranslate">sudo /usr/local/nginx/sbin/nginx</code></pre>
 <p>14. If it works then submit it to The Proxy Bay by going to <a href="submit.html">This Link</a>.</p>
-<p>15. You can set up an init script to load nginx on boot.  You can find startup scripts for different distributions <a href="https://www.nginx.com/resources/wiki/start/topics/examples/initscripts/">here</a>.  Be sure to change the paths to match where your nginx installation is located</p>  
+<p>15. You can set up an init script to load nginx on boot. You can find startup scripts for different distributions <a href="https://www.nginx.com/resources/wiki/start/topics/examples/initscripts/">here</a>. Be sure to change the paths to match where your nginx installation is located</p>  
 </section>
 <section class="hero-unit" id="PHP">
 <div class="page-header">
 <h1>PHP</h1>
 </div>
-<p>These two PHP scripts are designed specifically for providing access to The Pirate Bay. A great solution if you do not have a server that you can dedicate to the task.  They require PHP5 and cURL.</p>
+<p>These two PHP scripts are designed specifically for providing access to The Pirate Bay. A great solution if you do not have a server that you can dedicate to the task. They require PHP5 and cURL.</p>
 <br>
 <h4>Unblocked Pirate Bay PHP Script</h4>
-<p>This is the recommended PHP script that proxies The Pirate Bay.  This script does not use .htaccess and is likely to be more compatible with web servers</p>
-<p>Since it doesn't make use of .htaccess, the URL path will be appended by <strong>&#63;load&#61;&#47;</strong>.  For example: https&#58;&#47;&#47;yourdomain.com&#47;&#63;load&#61;&#47;browse</p>
-<p>Simply upload it to your web host and modify includes/config.php.  You can also customize the home page by editing home.html</p>
+<p>This is the recommended PHP script that proxies The Pirate Bay. This script does not use .htaccess and is likely to be more compatible with web servers</p>
+<p>Since it doesn't make use of .htaccess, the URL path will be appended by <strong>&#63;load&#61;&#47;</strong>. For example: https&#58;&#47;&#47;yourdomain.com&#47;&#63;load&#61;&#47;browse</p>
+<p>Simply upload it to your web host and modify includes/config.php. You can also customize the home page by editing home.html</p>
 <p><a href="https://github.com/piratebayproxy/UnblockedPiratebayClean">Download from Github here</a></p>
 <br>
 <h4>PHP The Pirate Bay Proxy</h4>
-<p>This script uses .htaccess to load the proxy script and modify the URL's.  Therefore, your server will need to run Apache for the .htaccess file to work</p>
-<p>If the script doesn't work, make sure the .htaccess file exists in the same directory as proxy.php.  You can also try removing the RewriteBase line from the htaccess file as well to see if that helps.  Otherwise, try the alternative script below</p>
+<p>This script uses .htaccess to load the proxy script and modify the URL's. Therefore, your server will need to run Apache for the .htaccess file to work</p>
+<p>If the script doesn't work, make sure the .htaccess file exists in the same directory as proxy.php. You can also try removing the RewriteBase line from the htaccess file as well to see if that helps. Otherwise, try the alternative script below</p>
 <p>To install, just unzip it and upload the files to your web server.</p>
 <p><a href="https://github.com/piratebayproxy/PHP-The-Pirate-Bay-Proxy">Download from Github here</a></p>
 </section>
@@ -133,19 +133,19 @@ http {
 <h1>Tips</h1>
 </div>
 <h3>Find a good Web Host</h3>
-<p>Try looking for a provider that ignores DMCA requests and is not based in the USA or UK.  Some hosts (even in Europe) will honour DMCA takedowns, so it's good to do your research.  Try doing a Google search for keywords such as: offshore, vps, dmca.</p>
+<p>Try looking for a provider that ignores DMCA requests and is not based in the USA or UK. Some hosts (even in Europe) will honour DMCA takedowns, so it's good to do your research. Try doing a Google search for keywords such as: offshore, vps, dmca.</p>
 <br>
 <h3>Use a CDN</h3>
-<p>Use a free CDN service such as <a target="_blank" href="https://www.cloudflare.com/">Cloudflare</a> to help speed up your site and lessen the load on your server.  It will also conceal the true location of your server.  Another free CDN provider is <a target="_blank" href="http://www.incapsula.com/">Incapsula</a></p>
-<p><strong>Note:</strong> If you are using Cloudflare, you will need to add <code>proxy_set_header CF-Connecting-IP '';</code> to your Nginx config for it to work.  Otherwise, you will get DNS errors</p>
+<p>Use a free CDN service such as <a target="_blank" href="https://www.cloudflare.com/">Cloudflare</a> to help speed up your site and lessen the load on your server. It will also conceal the true location of your server. Another free CDN provider is <a target="_blank" href="http://www.incapsula.com/">Incapsula</a></p>
+<p><strong>Note:</strong> If you are using Cloudflare, you will need to add <code>proxy_set_header CF-Connecting-IP '';</code> to your Nginx config for it to work. Otherwise, you will get DNS errors</p>
 <br>
 <h3>Use SSL</h3>
-<p>Aside from protecting the privacy of your users, using SSL can also bypass a lot of blocks from ISP's.  Therefore, it is highly recommended to use SSL for your proxy</p>
+<p>Aside from protecting the privacy of your users, using SSL can also bypass a lot of blocks from ISP's. Therefore, it is highly recommended to use SSL for your proxy</p>
 <p>Cloudlfare automatically provides an SSL certificate for your site so you can simply add https in front of your domain.</p>
-<p>If you buy your own certificate, be sure to follow the SSL best practices, such as enabling HSTS and using modern ciphers.  Here is a guide for <a href="https://t37.net/a-poodle-proof-bulletproof-nginx-ssl-configuration.html" target="_blank">NGINX</a></p>
+<p>If you buy your own certificate, be sure to follow the SSL best practices, such as enabling HSTS and using modern ciphers. Here is a guide for <a href="https://t37.net/a-poodle-proof-bulletproof-nginx-ssl-configuration.html" target="_blank">NGINX</a></p>
 <br>
 <h3>Use NGINX</h3>
-<p>NGINX is the fastest and most reliable proxy method available.  Otherwise, the Apache is also a good option.  The PHP scripts should be used if you are unable to setup the other options</p>
+<p>NGINX is the fastest and most reliable proxy method available. Otherwise, the Apache is also a good option. The PHP scripts should be used if you are unable to setup the other options</p>
 <p>Take a look at the <a href="http://nginx.org/en/docs/" target="_blank">NGINX Documentation</a> to further configure it to your needs</p>
 <p><a href="https://www.digitalocean.com/community/tutorials/how-to-optimize-nginx-configuration" target="_blank">Here</a> is a guide on how to optimize NGINX</p>
 <br>
@@ -155,18 +155,18 @@ http {
 <p>It's also good to avoid certain domain registries such as <a href="http://www.donuts.domains/services/domain-names" rel="nofollow" target="_blank">Donuts</a>, <a href="http://radix.website/tlds/generic.php" rel="nofollow" target="_blank">Radix</a>, or any UK based domain/registry.
 <br>
 <h3>Use WHOIS privacy on your domain name</h3>
-<p>When you register a domain name, your billing/registration information usually becomes public in the public WHOIS database.  Therefore, anyone can go on a <a href="http://who.is/" target="_blank">Whois search</a> site and lookup your domain.</p>
-<p>Some domain names do not support WHOIS privacy and will require your contact details to be public.  In that case, you can try inputting fake data.  However, be aware that this might be against the terms of your domain registration.  Here is <a target="_blank" href="http://www.hover.com/blog/why-whois-privacy-is-kind-of-a-big-deal/" title="More Information">More information</a>.</p>
+<p>When you register a domain name, your billing/registration information usually becomes public in the public WHOIS database. Therefore, anyone can go on a <a href="http://who.is/" target="_blank">Whois search</a> site and lookup your domain.</p>
+<p>Some domain names do not support WHOIS privacy and will require your contact details to be public. In that case, you can try inputting fake data. However, be aware that this might be against the terms of your domain registration. Here is <a target="_blank" href="http://www.hover.com/blog/why-whois-privacy-is-kind-of-a-big-deal/" title="More Information">More information</a>.</p>
 <br>
 <h3>Get a Free Domain Name</h3>
-<p>Using <a target="_blank" href="https://freedns.afraid.org/">FreeDNS</a>, you can register a free subdomain name (e.g. subdomain.domain.com).  This is free and doesn't require you to register or pay for a regular domain.  However, since it's a subdomain, you don't control the name servers and cannot use it with services like Cloudflare</p>
-<p>Another option is to get a free domain from <a href="http://freenom.com/" target="_blank">Freenom</a>.  Since these are regular domains (e.g. domain.tk), you can set up name servers to point at services such as Cloudflare</p>
+<p>Using <a target="_blank" href="https://freedns.afraid.org/">FreeDNS</a>, you can register a free subdomain name (e.g. subdomain.domain.com). This is free and doesn't require you to register or pay for a regular domain. However, since it's a subdomain, you don't control the name servers and cannot use it with services like Cloudflare</p>
+<p>Another option is to get a free domain from <a href="http://freenom.com/" target="_blank">Freenom</a>. Since these are regular domains (e.g. domain.tk), you can set up name servers to point at services such as Cloudflare</p>
 <br>
 <h3>Monitor your site</h3>
 <p>Here are some free options to monitor the uptime of your site: <a target="_blank" href="https://www.montastic.com/">Montastic</a>, <a target="_blank" href="http://www.monitor.us">Monitor.us</a>, <a target="_blank" href="http://uptimerobot.com/">Uptime Robot</a></p>
 <br>
 <h3>Check for updates</h3>
-<p>In the case that something changes with the TPB servers or setup, you may need to update the config or code to make the proxy work.  If you're using the PHP script, you can monitor the Github page.  Othewise, for NGINX, check this page occasionally for updates</p>
+<p>In the case that something changes with the TPB servers or setup, you may need to update the config or code to make the proxy work. If you're using the PHP script, you can monitor the Github page. Othewise, for NGINX, check this page occasionally for updates</p>
 </section>
 <section class="hero-unit" id="what-next">
 <div class="page-header">
