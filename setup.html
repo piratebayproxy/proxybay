@@ -136,7 +136,7 @@ http {
 <p>Try looking for a provider that ignores DMCA requests and is not based in the USA or UK. Some hosts (even in Europe) will honour DMCA takedowns, so it's good to do your research. Try doing a Google search for keywords such as: offshore, vps, dmca.</p>
 <br>
 <h3>Use a CDN</h3>
-<p>Use a free CDN service such as <a target="_blank" href="https://www.cloudflare.com/">Cloudflare</a> to help speed up your site and lessen the load on your server. It will also conceal the true location of your server. Another free CDN provider is <a target="_blank" href="http://www.incapsula.com/">Incapsula</a></p>
+<p>Use a free CDN service such as <a target="_blank" href="https://www.cloudflare.com/">Cloudflare</a> to help speed up your site and lessen the load on your server. It will also conceal the true location of your server.</p> 
 <p><strong>Note:</strong> If you are using Cloudflare, you will need to add <code>proxy_set_header CF-Connecting-IP '';</code> to your Nginx config for it to work. Otherwise, you will get DNS errors</p>
 <br>
 <h3>Use SSL</h3>
@@ -145,14 +145,14 @@ http {
 <p>If you buy your own certificate, be sure to follow the SSL best practices, such as enabling HSTS and using modern ciphers. Here is a guide for <a href="https://t37.net/a-poodle-proof-bulletproof-nginx-ssl-configuration.html" target="_blank">NGINX</a></p>
 <br>
 <h3>Use NGINX</h3>
-<p>NGINX is the fastest and most reliable proxy method available. Otherwise, the Apache is also a good option. The PHP scripts should be used if you are unable to setup the other options</p>
+<p>NGINX is the fastest and most reliable proxy method available. The PHP scripts should be used if you are unable to setup NGINX</p>
 <p>Take a look at the <a href="http://nginx.org/en/docs/" target="_blank">NGINX Documentation</a> to further configure it to your needs</p>
 <p><a href="https://www.digitalocean.com/community/tutorials/how-to-optimize-nginx-configuration" target="_blank">Here</a> is a guide on how to optimize NGINX</p>
 <br>
 <h3>Find a good Domain Registrar</h3>
 <p>I recommend <a target="_blank" href="https://www.hover.com/" title="Hover">Hover</a>, <a target="_blank" href="https://www.easydns.com/" title="EasyDNS">EasyDNS</a>, or <a target="_blank" href="https://www.namecheap.com/" title="Namecheap">NameCheap</a>.</p>
 <p>Avoid GoDaddy, Register.com, Network Solutions and Web.com</p>
-<p>It's also good to avoid certain domain registries such as <a href="http://www.donuts.domains/services/domain-names" rel="nofollow" target="_blank">Donuts</a>, <a href="http://radix.website/tlds/generic.php" rel="nofollow" target="_blank">Radix</a>, or any UK based domain/registry.
+<p>It's also good to avoid certain domain registries such as <a href="http://www.donuts.domains/services/domain-names" rel="nofollow" target="_blank">Donuts</a>, <a href="http://radix.website/tlds/generic.php" rel="nofollow" target="_blank">Radix</a>, or any UK based domain registry.</p>
 <br>
 <h3>Use WHOIS privacy on your domain name</h3>
 <p>When you register a domain name, your billing/registration information usually becomes public in the public WHOIS database. Therefore, anyone can go on a <a href="http://who.is/" target="_blank">Whois search</a> site and lookup your domain.</p>
