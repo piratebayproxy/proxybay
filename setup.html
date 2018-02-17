@@ -55,25 +55,29 @@
 <div class="page-header">
 <h1>NGINX</h1>
 </div>
-<p>1. Once you have your server online you'll want to get NGINX compiled and  installed. To do this, we will first need to install some packages.</p>
+<p>1. Once you have your server online you will want to get NGINX compiled and installed.</p>
+<p>To do this, we will first need to install some packages.</p>
 <p>a) If you're using a Debian based OS (e.g. Ubuntu), run this:</p>
 <pre><code class="notranslate">apt-get install libpcre3 libpcre3-dev zlib1g zlib1g-dev openssl libssl-dev gcc make git</code></pre>
 <p>b) If you're using a Red Hat based OS (e.g. Centos), run this:</p>
 <pre><code class="notranslate">yum install pcre-devel zlib-devel openssl-devel gcc make subversion</code></pre>
 <br>
-<p>2. Now that the packages are installed, we will download the NGINX source code to the /tmp/nginx directory and compile it. You can find the latest version <a href="http://nginx.org/en/download.html" target="_blank">here</a>.</p>
+<p>2. Now that the packages are installed, we will download the NGINX source code to the /tmp/nginx directory and compile it.</p>
+<p>You can find the latest version <a href="http://nginx.org/en/download.html" target="_blank">here</a>.</p>
 <pre><code class="notranslate">mkdir -p /tmp/nginx
 cd /tmp/nginx
 wget https://nginx.org/download/nginx-1.12.2.tar.gz</code></pre>
 <br>
-<p>3. We need to download the <a href="https://github.com/yaoweibin/ngx_http_substitutions_filter_module" target="_blank" title="substitutions module on Github">substitutions module</a> in order to make text and regex replacements with the proxy. Clone the Github repository with the following command.</p>
+<p>3. We need to download the <a href="https://github.com/yaoweibin/ngx_http_substitutions_filter_module" target="_blank" title="substitutions module on Github">substitutions module</a> in order to make text and regex replacements with the proxy.</p>
+<p>Clone the Github repository with the following command.</p>
 <pre><code class="notranslate">git clone git://github.com/yaoweibin/ngx_http_substitutions_filter_module.git</code></pre>
 <br>
 <p>4. Extract the source.</p>
 <pre><code class="notranslate">tar xzvf nginx-1.12.2.tar.gz 
 cd nginx-1.12.2</code></pre>
 <br>
-<p>5. Now we can configure NGINX. Ensure that the substitutions module folder path is correct. See <a href="https://www.nginx.com/resources/wiki/start/topics/tutorials/installoptions/" title="Configure Nginx" target="_blank">this</a> link for more configuration options.</p>
+<p>5. Now we can configure NGINX. Ensure that the substitutions module folder path is correct.</p>
+<p>See <a href="https://www.nginx.com/resources/wiki/start/topics/tutorials/installoptions/" title="Configure Nginx" target="_blank">this</a> link for more configuration options.</p>
 <pre><code class="notranslate">./configure --with-http_ssl_module --add-module=/tmp/nginx/ngx_http_substitutions_filter_module</code></pre>
 <br>
 <p>6. Now we can compile and install NGINX. It will be installed to /usr/local/nginx/ by default.</p>
@@ -84,14 +88,17 @@ make install</code></pre>
 <p>Note: If logged in as root, you don't need the sudo command</p>
 <pre><code class="notranslate">sudo /usr/local/nginx/sbin/nginx</code></pre>
 <br>
-<p>8. Check if it's working by typing in your server IP in your web browser. You should see the "Welcome to NGINX!" message. If it's working, stop NGINX now so we can configure it. If it's not working, ensure nothing else is running on port 80 (<a href="https://stackoverflow.com/questions/14972792/nginx-nginx-emerg-bind-to-80-failed-98-address-already-in-use" title="Stackoverflow help">link</a>) or try checking Google for a solution.</p>
+<p>8. Check if it's working by typing in your server IP in your web browser. You should see the "Welcome to NGINX!" message.</p>
+<p>If it's working, stop NGINX with the following command now so we can configure it.</p>
+<p>If it's not working, ensure nothing else is running on port 80 (<a href="https://stackoverflow.com/questions/14972792/nginx-nginx-emerg-bind-to-80-failed-98-address-already-in-use" title="Stackoverflow help">link</a>) or try checking Google for a solution.</p>
 <pre><code class="notranslate">sudo /usr/local/nginx/sbin/nginx -s stop</code></pre>
 <br>
 <p>9. Rename the default config file so we've got a copy of the original config</p>
 <pre><code class="notranslate">cd /usr/local/nginx/conf
 mv nginx.conf nginx.conf-backup</code></pre>
 <br>
-<p>10. Copy the following config and insert it into nginx.conf using a text editor such as nano or vi. (e.g. nano nginx.conf). For more information on how to configure NGINX, see <a href="https://www.linode.com/docs/web-servers/nginx/how-to-configure-nginx/" title="Linode tutorial">this</a> link.</p>
+<p>10. Copy the following config and insert it into nginx.conf using a text editor such as nano or vi. (e.g. nano nginx.conf).</p>
+<p>For more information on how to configure NGINX, see <a href="https://www.linode.com/docs/web-servers/nginx/how-to-configure-nginx/" title="Linode tutorial">this</a> link.</p>
 <pre><code class="notranslate">worker_processes auto;
 events {
   worker_connections 1024;
@@ -121,13 +128,16 @@ http {
   }
 }</code></pre>
 <br>
-<p>11. Test your config works by starting NGINX with the following command. If you see an error, try checking inputting the error in Google for solutions. You can also check the error log by going to /usr/local/nginx/logs/.</p>
+<p>11. Test your config works by starting NGINX with the following command.</p>
+<p>If you see an error, try checking inputting the error in Google for solutions. You can also check the error log by going to /usr/local/nginx/logs/.</p>
 <pre><code class="notranslate">sudo /usr/local/nginx/sbin/nginx</code></pre>
 <br>
-<p>14. You can test if it works by going to your domain in your browser or running the following curl command on your server. If it works then submit it to The Proxy Bay by going to <a href="submit.html">This Link</a>.</p>
+<p>14. You can test if it works by going to your domain in your browser or running the following curl command on your server.</p>
+<p>If it works then submit it to The Proxy Bay by going to <a href="submit.html">This Link</a>.</p>
 <pre><code class="notranslate">curl -H 'Host: yourdomain.com' localhost</code></pre>
 <br>
-<p>15. You should now setup an init script to load NGINX when your server starts. You can find startup scripts for different distributions <a href="https://www.nginx.com/resources/wiki/start/topics/examples/initscripts/">here</a>. Be sure to change the paths to match where your NGINX installation is located</p>  
+<p>15. You should now setup an init script to load NGINX when your server starts.</p>
+<p>You can find startup scripts for different distributions <a href="https://www.nginx.com/resources/wiki/start/topics/examples/initscripts/">here</a>. Be sure to change the paths to match where your NGINX installation is located</p>  
 </section>
 <section class="hero-unit" id="PHP">
 <div class="page-header">
