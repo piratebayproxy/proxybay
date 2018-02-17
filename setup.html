@@ -100,9 +100,13 @@ http {
       proxy_set_header Host thepiratebay.org;
       proxy_set_header CF-Connecting-IP &quot;&quot;;
 
-      subs_filter &#39;&lt;strong id=&quot;howdl&quot;&gt;.*&lt;\/strong&gt;&#39; &#39;&lt;strong id=&quot;howdl&quot;&gt;&lt;a href=&quot;https://proxybay.bz&quot;&gt;List of Pirate Bay proxies&lt;/a&gt;&lt;/strong&gt;&lt;br&gt;&#39; r;
+      subs_filter '&lt;a href=&quot;/help&quot; title=&quot;How do I download?&quot;&gt;How do I download?&lt;/a&gt;' '&lt;a href=&quot;https://proxybay.bz&quot; title=&quot;Proxy List&quot;&gt;More Pirate Bay Proxy Sites&lt;/a&gt;';
+      subs_filter '&lt;a href=&quot;/login&quot; title=&quot;Login&quot;&gt;Login&lt;/a&gt; |' '';
+      subs_filter '&lt;a href=&quot;/register&quot; title=&quot;Register&quot;&gt;Register&lt;/a&gt; |' '';
       subs_filter &#39;thepiratebay.org&#39; $host;
     }
+    location /login {return 403;}
+    location /register {return 403;}
   }
 }</code></pre>
 <p>11. Test your config works by starting nginx. It's a good idea to make sure nothing else is running on your web port (e.g. Apache). If you get errors, something needs changing. Usually the output will point you in the right direction. You can also check the error log by going to /usr/local/nginx/logs/. If you can't figure it out, try searching the internet as there are a lot of resources</p>
