@@ -224,3 +224,9 @@ font-size:18px;
 
 #moreInfo{width:900px;margin: 0 auto;text-align:left;margin-top:40px;padding: 20px 40px 25px 40px;border-radius: 10px;-webkit-border-radius: 6px;-moz-border-radius: 6px;background-color: #eee;margin-bottom: 30px;font-size:16px;}
 .feedback{position:fixed;border-radius: 10px 10px 0px 0px;-moz-border-radius: 10px;-webkit-border-radius: 10px 10px 0px 0px;bottom:-2px;right:25px;background-color:#fff;border:2px solid #1B1B1B;display:inline-block;color:#1B1B1B;font-family:Arial;font-size:16px;font-weight:bold;height:36px;line-height:36px;width:140px;text-decoration:none;text-align:center;text-shadow:0px 0px 0px #ffffff;}.feedback:hover{background-color:#dfdfdf;}#feedbackFrame{border:0px;overflow:hidden;}
+@media only screen and (max-width: 520px)
+{td.speed,td.status,td.score,td.country,td.report,td.statusup,td.statusdown{display:none}
+table#proxyList{width:100%}
+table thead{display:none}
+#dateText #tpbnotice{width:auto;font-size:14px;}
+#noticeimg{display:none}}
