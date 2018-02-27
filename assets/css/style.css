@@ -20,6 +20,8 @@ a:hover{text-decoration: underline;}
 	display: block;
 }
 
+#header {width:750px;margin: 0 auto;}
+
 #container {
 	position: relative;
 	overflow: hidden;
