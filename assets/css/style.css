@@ -229,4 +229,7 @@ font-size:18px;
 table#proxyList{width:100%}
 table thead{display:none}
 #dateText #tpbnotice{width:auto;font-size:14px;}
+#footer{display:none}
+#navLinks{display:none}
+#headerImg{display:none}
 #noticeimg{display:none}}
