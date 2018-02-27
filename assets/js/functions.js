@@ -19,7 +19,7 @@ window.onload = function(){
          }
       }
   };
-  xmlhttp.open("GET", "https://proxybay.bz/status.txt", true);
+  xmlhttp.open("GET", "status.txt", true);
   xmlhttp.send();
 }
 
