@@ -88,8 +88,8 @@ table#proxyList{
 	border-spacing: 0;
 	border-collapse: collapse;
 }
-table#proxyList tr {
-	border-bottom:1pt solid #ccc;
+table#proxyList td {
+  border:1pt solid #ccc;
 }
 table#proxyList th{
 	background: #eee;
