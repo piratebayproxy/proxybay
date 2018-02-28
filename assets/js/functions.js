@@ -53,16 +53,18 @@ function submit_feedback(){
   $('feedbackResponse').innerHTML = '<img src="assets/img/load.gif">';
   if($('feedback_email')){var email=encodeURIComponent($('feedback_email').value);}
   if($('feedback_message').value.length < 4){$('feedbackResponse').innerHTML = "Error: Message too short"}
-  else{var message = encodeURIComponent($('feedback_message').value);}
-  var captchaResponse = encodeURIComponent($('g-recaptcha-response').value);
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState == 4) {
-      if (xmlhttp.status==200) {
-        $('feedbackResponse').innerHTML = xmlhttp.responseText;
-        $('feedback_message').value = '';
-        $('feedback_email').value = '';
-        //grecaptcha.reset();
+  else{
+    var message = encodeURIComponent($('feedback_message').value);
+    var captchaResponse = encodeURIComponent($('g-recaptcha-response').value);
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState == 4) {
+        if (xmlhttp.status==200) {
+          $('feedbackResponse').innerHTML = xmlhttp.responseText;
+          $('feedback_message').value = '';
+          $('feedback_email').value = '';
+          //grecaptcha.reset();
+        }
       }
     }
   };
@@ -76,7 +78,7 @@ function submit_report(){
   $('reportResponse').innerHTML = '<img src="assets/img/load.gif">';
   var radios = document.getElementsByName('reportSite');
   for (var i = 0, length = radios.length; i < length; i++){
-   if (radios[i].checked){var feedbackVal = radios[i].value;break;}
+    if (radios[i].checked){var feedbackVal = radios[i].value;break;}
   }
   var reportedUrl = $('reportedSite').value;
   var xmlhttp = new XMLHttpRequest();
