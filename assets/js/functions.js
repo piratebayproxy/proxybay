@@ -63,7 +63,7 @@ function submit_feedback(){
         feedbackResponse.innerHTML = xmlhttp.responseText;
         $('feedback_message').value = '';
         $('feedback_email').value = '';
-        grecaptcha.reset();
+        //grecaptcha.reset();
       }
     }
   };
