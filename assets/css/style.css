@@ -110,7 +110,7 @@ padding: 16px 0px 16px 14px;
 	display: block;
 }
 
-table tr:nth-child(odd) td{
+table#proxyList tr:nth-child(odd) td{
 	background: #f9f9f9;
 }
 
