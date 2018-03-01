@@ -71,7 +71,6 @@ function submit_feedback(){
   xmlhttp.open("POST", "https://s.proxybay.bz/pb_feedback_mail.php", true);
   xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
   xmlhttp.send('email='+email+'&message='+message+'&captcharesponse='+captchaResponse);
-  
 }
 
 function submit_report(){
