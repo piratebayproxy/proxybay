@@ -47,6 +47,8 @@ function feedback_form_hide() {
   $('feedbackContainer').style.display = "none";
   $('feedbackBtn').style.display = "block";
   $('feedbackResponse').innerHTML = '';
+  $('feedback_message').value = '';
+  $('feedback_email').value = '';
 }
 
 function submit_feedback(){
@@ -62,9 +64,7 @@ function submit_feedback(){
       if (xmlhttp.readyState == 4) {
         if (xmlhttp.status==200) {
           $('feedbackResponse').innerHTML = xmlhttp.responseText;
-          $('feedback_message').value = '';
-          $('feedback_email').value = '';
-          //grecaptcha.reset();
+          grecaptcha.reset();
         }
       }
     }
