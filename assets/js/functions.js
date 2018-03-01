@@ -55,7 +55,8 @@ function submit_feedback(){
   if($('feedback_message').value.length < 4){$('feedbackResponse').innerHTML = "Error: Message too short"}
   else{
     var message = encodeURIComponent($('feedback_message').value);
-    var captchaResponse = encodeURIComponent($('g-recaptcha-response').value);
+    //var captchaResponse = encodeURIComponent($('g-recaptcha-response').value);
+    var captchaResponse = encodeURIComponent('');
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState == 4) {
