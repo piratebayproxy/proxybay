@@ -38,6 +38,30 @@
   <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png" sizes="32x32">
   <link rel="icon" type="image/png" href="assets/img/favicon-16x16.png" sizes="16x16">
   <link rel="icon" type="image/png" href="assets/img/favicon-128.png" sizes="128x128">
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+  <script type="text/javascript">
+    function submit_feedback(){
+    $('feedbackResponse').innerHTML = '<img src="assets/img/load.gif">';
+    if($('feedback_email')){var email=encodeURIComponent($('feedback_email').value);}
+    if($('feedback_message').value.length < 4){$('feedbackResponse').innerHTML = "Error: Message too short"}
+    else{
+      var message = encodeURIComponent($('feedback_message').value);
+      var captchaResponse = encodeURIComponent($('g-recaptcha-response').value);
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4) {
+          if (xmlhttp.status==200) {
+            $('feedbackResponse').innerHTML = xmlhttp.responseText;
+            grecaptcha.reset();
+          }
+        }
+      }
+    };
+    xmlhttp.open("POST", "https://s.proxybay.ist/pb_feedback_mail.php", true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+    xmlhttp.send('email='+email+'&message='+message+'&captcharesponse='+captchaResponse);
+    }
+  </script>
 </head>
 <body>
   <div id="container">
@@ -55,14 +79,17 @@
     </div>
     <div id="content" class="setup">
       <h2>Contact Us</h2>
-      <ul>
-        <li>Twitter: <a target="_blank" href="https://twitter.com/#!/ThePirateProxy" title="Twitter">@ThePirateProxy</a></li>
-        <li>To send an email, use the feedback button on the homepage</li>
-      </ul>
-      <br>
-      <h2>Twitter Stream</h2>
-      <a class="twitter-timeline"  href="https://twitter.com/ThePirateProxy" data-widget-id="244229993792671745">Tweets by @ThePirateProxy</a>
-      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        <form action="#" id="feedbackForm" method="post" name="form">
+        <img id="close" src="assets/img/close.png" onclick="feedback_form_hide()">
+        <h2>Contact Us</h2>
+        <input id="feedback_email" name="email" placeholder="Email (Optional)" type="text">
+        <br>
+        <textarea id="feedback_message" name="message" placeholder="Message"></textarea>
+        <div class="g-recaptcha" data-sitekey="6LcHAkIUAAAAAMA-ELT_n5yZFZdOonOIxbaW-ilj"></div>
+        <br>
+        <a href="#" onclick="javascript:submit_feedback();return false;" id="submit" class="submit">Send</a>
+        <p id="feedbackResponse"></p>
+      </form>
     </div>
   </div>
 </body>
