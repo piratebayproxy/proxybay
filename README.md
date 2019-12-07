@@ -2,5 +2,5 @@
 
 View site on Github: https://proxybay.github.io/
 
-View original site: https://proxybay.red/
+View original site: https://proxybay.ltd/
 
