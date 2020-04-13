@@ -69,6 +69,9 @@
       <p>This guide will explain how to set up your own Pirate Bay proxy site. A proxy site will help users in countries where The Pirate Bay has been blocked.</p>
       <p>NGINX is our recommended method of setting up a proxy since it is fast, requires few resources, and has many advanced reverse proxy features. You will need a server with root access in order to compile and use NGINX. Don't use a precompiled binary from your distributions repos (e.g. apt-get install package) since it will not have the required modules.</p>
       <p>There are also two PHP scripts available that can be used on shared web hosting packages that support PHP. This means it is easier to setup than NGINX since you do not need a dedicated server or VPS</p>
+      <h3>Update: April 12, 2020</h3>
+      <p>The Pirate Bay has made some new changes that break existing proxy methods</p>
+      <p>We have updated the <a href="https://github.com/piratebayproxy/UnblockedPiratebayClean">PHP script</a> and it is now compatible with the new update</p>
     </div>
     <br><br>
     <div class="setup" id="Nginx">
@@ -158,8 +161,8 @@ http {
       <p>These two PHP scripts are designed specifically for providing access to The Pirate Bay. A great solution if you do not have a server that you can dedicate to the task. They require PHP5 and cURL.</p>
       <h4>Unblocked Pirate Bay PHP Script</h4>
       <p>This is the recommended PHP script that proxies The Pirate Bay. This script does not use .htaccess and is likely to be more compatible with web servers</p>
-      <p>Since it doesn't make use of .htaccess, the URL path will be appended by <strong>&#63;load&#61;&#47;</strong>. For example: https&#58;&#47;&#47;yourdomain.com&#47;&#63;load&#61;&#47;browse</p>
-      <p>Simply upload it to your web host and modify includes/config.php. You can also customize the home page by editing home.html</p>
+      <p>Simply upload it to your web host that supports PHP and the PHP Curl library</p>
+      <p><strong>Update:</strong> The script is now compatible with the April 2020 update of The Pirate Bay</p>
       <p><a href="https://github.com/piratebayproxy/UnblockedPiratebayClean">Download from Github here</a></p>
       <h4>PHP The Pirate Bay Proxy</h4>
       <p>This script uses .htaccess to load the proxy script and modify the URL's. Therefore, your server will need to run Apache for the .htaccess file to work</p>
