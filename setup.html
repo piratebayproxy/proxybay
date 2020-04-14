@@ -67,7 +67,7 @@
     <div class="setup" id="Overview">
       <h1>Overview</h1>
       <p>This guide will explain how to set up your own Pirate Bay proxy site. A proxy site will help users in countries where The Pirate Bay has been blocked.</p>
-      <p>NGINX is our recommended method of setting up a proxy since it is fast, requires few resources, and has many advanced reverse proxy features. You will need a server with root access in order to compile and use NGINX. Don't use a precompiled binary from your distributions repos (e.g. apt-get install package) since it will not have the required modules.</p>
+      <p>NGINX is our recommended method of setting up a proxy since it is fast, requires few resources, and has caching support. You will need a server with root access in order to compile and use NGINX. Don't use a precompiled binary from your distributions repos (e.g. apt-get install package) since it will not have the required modules.</p>
       <p>There are also two PHP scripts available that can be used on shared web hosting packages that support PHP. This means it is easier to setup than NGINX since you do not need a dedicated server or VPS</p>
       <h3>Update: April 12, 2020</h3>
       <p>The Pirate Bay has made some new changes that break existing proxy methods</p>
@@ -242,7 +242,7 @@ http {
       <p><a href="https://github.com/piratebayproxy/UnblockedPiratebayClean">Download from Github here</a></p>
       <h4>PHP The Pirate Bay Proxy</h4>
       <p>This script uses .htaccess to load the proxy script and modify the URL's. Therefore, your server will need to run Apache for the .htaccess file to work</p>
-      <p>If the script doesn't work, make sure the .htaccess file exists in the same directory as proxy.php. You can also try removing the RewriteBase line from the htaccess file as well to see if that helps. Otherwise, try the alternative script below</p>
+      <p>If the script doesn't work, make sure the .htaccess file exists in the same directory as proxy.php. You can also try removing the RewriteBase line from the htaccess file as well to see if that helps. Otherwise, try the alternative script above</p>
       <p>To install, just unzip it and upload the files to your web server.</p>
       <p><a href="https://github.com/piratebayproxy/PHP-The-Pirate-Bay-Proxy">Download from Github here</a></p>
     </div>
