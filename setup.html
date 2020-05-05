@@ -76,6 +76,8 @@
     <br><br>
     <div class="setup" id="Nginx">
       <h1>NGINX Method</h1>
+      <p>With the NGINX method, you will compile NGINX from source in order to include the substitutions module. The substitutions module allows NGINX to search and replace text on the pages. Once set up, the NGINX server will serve as a fully functioning reverse proxy without the need for any server side code or scripts.</p> 
+      <p>In order to compile NGINX, you will need root access to a Linux based server</p>
       <p>1. Once you have your server online you will want to get NGINX compiled and installed.</p>
       <p>To do this, we will first need to install some packages.</p>
       <p>a) If you're using a Debian based OS (e.g. Ubuntu), run this:</p>
@@ -234,17 +236,11 @@ http {
     <br><br>
     <div class="setup" id="PHP">
       <h1>PHP Method</h1>
-      <p>These two PHP scripts are designed specifically for providing access to The Pirate Bay. A great solution if you do not have a server that you can dedicate to the task. They require PHP5 and cURL.</p>
-      <h4>Unblocked Pirate Bay PHP Script</h4>
-      <p>This is the recommended PHP script that proxies The Pirate Bay. This script does not use .htaccess and is likely to be more compatible with web servers</p>
-      <p>Simply upload it to your web host that supports PHP and the PHP Curl library</p>
+      <p>With the PHP method, you simply need to uplaod the files to a web server that supports PHP and the PHP-Curl function</p>
+      <p>In most cases, you will just need to upload the files to your web directory and the script will work</p>
+      <p>If you don't have a web server running on your server, you will need to install it first using your distributions repositories (e.g. apt-get install nginx php php-curl)</p>
       <p><strong>Update:</strong> The script is now compatible with the April 2020 update of The Pirate Bay</p>
       <p><a href="https://github.com/piratebayproxy/UnblockedPiratebayClean">Download from Github here</a></p>
-      <h4>PHP The Pirate Bay Proxy</h4>
-      <p>This script uses .htaccess to load the proxy script and modify the URL's. Therefore, your server will need to run Apache for the .htaccess file to work</p>
-      <p>If the script doesn't work, make sure the .htaccess file exists in the same directory as proxy.php. You can also try removing the RewriteBase line from the htaccess file as well to see if that helps. Otherwise, try the alternative script above</p>
-      <p>To install, just unzip it and upload the files to your web server.</p>
-      <p><a href="https://github.com/piratebayproxy/PHP-The-Pirate-Bay-Proxy">Download from Github here</a></p>
     </div>
     <br><br>
     <div class="setup" id="Tips">
