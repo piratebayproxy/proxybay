@@ -179,7 +179,7 @@ http {
     }
 
     #API URI - 1 day cache
-    location /apip {
+    location /apip/ {
       proxy_pass https://apibay.org/;
       proxy_set_header Host apibay.org;
       proxy_set_header Referer &#039;https://thepiratebay.org&#039;;
