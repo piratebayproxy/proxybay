@@ -146,6 +146,7 @@ http {
     proxy_redirect http://thepiratebay.org http://$host;
 
     #Other URI&#039;s
+    location = / {return 301 /index.html;}
     location /session {return 302 /;}
     location ~ /torrent/(?&lt;myvar&gt;[0-9]+)/ {return 301 /description.php?id=$myvar;}
     location ~ /search/(?&lt;myvar&gt;.+)/0/ {return 301 /search.php?q=$myvar;}
@@ -171,6 +172,8 @@ http {
       subs_filter &#039;https://apibay.org&#039; &quot;http://$host/apip&quot;;
       subs_filter &#039;&lt;a href=&quot;/session/&quot; title=&quot;Login/Upload&quot;&gt;Login/Upload&lt;/a&gt; |&#039; &#039;&#039;;
       subs_filter &#039;&lt;a href=&quot;/session/&quot; title=&quot;Register&quot;&gt;Register&lt;/a&gt;&#039; &#039;&#039;;
+      subs_filter &#039;&lt;a href=&quot;/session/&quot; title=&quot;Login&quot;&gt;Login&lt;/a&gt; |&#039; &#039;&#039;;
+      subs_filter &#039;&lt;a href=&quot;&quot; title=&quot;Register&quot;&gt;Register&lt;/a&gt;&#039; &#039;&#039;;
       subs_filter &#039;https://thepiratebay.org&#039; http://$host;
       subs_filter &#039;thepiratebay.org&#039; $host;
     }
