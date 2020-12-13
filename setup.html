@@ -58,7 +58,7 @@
     <h1>Sections</h1>
     <ul id="setupMenu">
     <li><a href="#Overview">Overview</a></li>
-    <li><a href="#Nginx">NGINX Method</a></li>
+    <li><a href="#Nginx">NGINX Method (Advanced)</a></li>
     <li><a href="#PHP">PHP Method</a></li>
     <li><a href="#Tips">Tips</a></li>
     <li><a href="#what-next">Next steps</a></li>
@@ -66,18 +66,18 @@
     <br>
     <div class="setup" id="Overview">
       <h1>Overview</h1>
-      <p>This guide will explain how to set up your own Pirate Bay proxy site. A proxy site will help users in countries where The Pirate Bay has been blocked.</p>
-      <p>NGINX is our recommended method of setting up a proxy since it is fast, requires few resources, and has caching support. You will need a server with root access in order to compile and use NGINX. Don't use a precompiled binary from your distributions repos (e.g. apt-get install package) since it will not have the required modules.</p>
-      <p>There are also two PHP scripts available that can be used on shared web hosting packages that support PHP. This means it is easier to setup than NGINX since you do not need a dedicated server or VPS</p>
+      <p>This guide will explain how to set up your own Pirate Bay proxy site. A proxy site helps users access The Pirate Bay in countries and networks where The Pirate Bay has been blocked.</p>
+      <p>NGINX is our recommended method of setting up a proxy since it is fast, requires few resources, and has caching support. However, setting up an NGINX proxy is for advanced users since it involves the Linux command line. You will also need access to a server with command line access such as a VPS or dedicated server.</p>
+      <p>A simpler method to setup a proxy is by using the PHP script. The PHP script is much easier to setup and can be used on shared web hosting packages that support PHP. This means unlike the NGINX method, you do not need a dedicated server or VPS</p>
       <h3>Update: April 12, 2020</h3>
       <p>The Pirate Bay has made some new changes that break existing proxy methods</p>
       <p>We have updated the <a href="https://github.com/piratebayproxy/UnblockedPiratebayClean">PHP script</a> and it is now compatible with the new update</p>
     </div>
     <br><br>
     <div class="setup" id="Nginx">
-      <h1>NGINX Method</h1>
+      <h1>NGINX Method (Advanced)</h1>
       <p>With the NGINX method, you will compile NGINX from source in order to include the substitutions module. The substitutions module allows NGINX to search and replace text on the pages. Once set up, the NGINX server will serve as a fully functioning reverse proxy without the need for any server side code or scripts.</p> 
-      <p>In order to compile NGINX, you will need root access to a Linux based server</p>
+      <p>In order to compile NGINX, you will need root access to a Linux based server (e.g. VPS or dedicated server)</p>
       <p>1. Once you have your server online you will want to get NGINX compiled and installed.</p>
       <p>To do this, we will first need to install some packages.</p>
       <p>a) If you're using a Debian based OS (e.g. Ubuntu), run this:</p>
