@@ -120,11 +120,11 @@
       <br><br>
       <p>10. Copy the following config and insert it into nginx.conf using a text editor such as nano or vi. (e.g. nano nginx.conf). Change yourdomain.com to your own domain in the config.</p>
       <p>For more information on how to configure NGINX, see <a href="https://www.linode.com/docs/web-servers/nginx/how-to-configure-nginx/" title="Linode tutorial">this</a> link.</p>
-      <p><strong>Update: April 2020</strong> The NGINX config has been updated for the new TPB update. We have also added caching support</p>
+      <p><strong>Update: April 2020</strong> The NGINX config has been updated for the new TPB update.</p>
       <code class="notranslate" style="display:block;white-space:pre-wrap">worker_processes auto;
 events {worker_connections 1024;}
 http {
-  include  mime.types;
+  include mime.types;
   default_type application/octet-stream;
   proxy_ssl_server_name on;
   sendfile on;
@@ -133,9 +133,6 @@ http {
   #Logs
   access_log logs/access.log;
   error_log logs/error.log;
-
-  #Enable Caching
-  proxy_cache_path /usr/local/nginx/cache levels=1:2 keys_zone=STATIC:10m inactive=12h max_size=500m;
 
   server {
     listen 80;
@@ -151,19 +148,13 @@ http {
     location ~ /torrent/(?&lt;myvar&gt;[0-9]+)/ {return 301 /description.php?id=$myvar;}
     location ~ /search/(?&lt;myvar&gt;.+)/0/ {return 301 /search.php?q=$myvar;}
 
-    #Root URI - 1 day cache
+    #Root URI
     location / {
       proxy_pass https://thepiratebay.org;
       proxy_set_header Host thepiratebay.org;
       proxy_set_header Referer &#039;https://thepiratebay.org&#039;;
       proxy_set_header Accept-Encoding &quot;&quot;;
       proxy_set_header CF-Connecting-IP &quot;&quot;;
-      proxy_cache_valid 200 1d;
-      expires 1d;
-      proxy_ignore_headers Expires Cache-Control Set-Cookie;
-      proxy_cache STATIC;
-      add_header Cache-Control public;
-      proxy_cache_use_stale error timeout invalid_header updating http_500 http_502 http_503 http_504;
 
       #Substitutions
       subs_filter_types &#039;application/javascript&#039;;
@@ -178,49 +169,31 @@ http {
       subs_filter &#039;thepiratebay.org&#039; $host;
     }
 
-    #API URI - 1 day cache
+    #API URI
     location /apip/ {
       proxy_pass https://apibay.org/;
       proxy_set_header Host apibay.org;
       proxy_set_header Referer &#039;https://thepiratebay.org&#039;;
       proxy_set_header Accept-Encoding &quot;&quot;;
       proxy_set_header CF-Connecting-IP &quot;&quot;;
-      proxy_cache_valid 200 1d;
-      expires 1d;
-      proxy_ignore_headers Expires Cache-Control Set-Cookie;
-      proxy_cache STATIC;
-      add_header Cache-Control public;
-      proxy_cache_use_stale error timeout invalid_header updating http_500 http_502 http_503 http_504;
     }
 
-    #Recent URI - 1 hour cache
+    #Recent URI
     location /apip/precompiled/data_top100_recent.json {
       proxy_pass https://apibay.org/precompiled/data_top100_recent.json;
       proxy_set_header Host apibay.org;
       proxy_set_header Referer &#039;https://thepiratebay.org&#039;;
       proxy_set_header Accept-Encoding &quot;&quot;;
       proxy_set_header CF-Connecting-IP &quot;&quot;;
-      proxy_cache_valid 200 1h;
-      expires 1h;
-      proxy_ignore_headers Expires Cache-Control Set-Cookie;
-      proxy_cache STATIC;
-      add_header Cache-Control public;
-      proxy_cache_use_stale error timeout invalid_header updating http_500 http_502 http_503 http_504;
     }
 
-    #Torrindex URI - 30 day cache
+    #Torrindex URI
     location /torrindexp {
       proxy_pass https://torrindex.net/;
       proxy_set_header Host torrindex.net;
       proxy_set_header Referer &#039;https://thepiratebay.org&#039;;
       proxy_set_header Accept-Encoding &quot;&quot;;
       proxy_set_header CF-Connecting-IP &quot;&quot;;
-      proxy_cache_valid 200 30d;
-      expires 30d;
-      proxy_ignore_headers Expires Cache-Control Set-Cookie;
-      proxy_cache STATIC;
-      add_header Cache-Control public;
-      proxy_cache_use_stale error timeout invalid_header updating http_500 http_502 http_503 http_504;
     }
   }
 }</code>
