@@ -2,5 +2,5 @@
 
 View site on Github: https://proxybay.github.io/
 
-View original site: https://proxy-bay.app/
+View original site: https://proxy-bay.one/
 
