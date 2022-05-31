@@ -1,6 +1,6 @@
 # The Proxy Bay
 
-View site on Github: https://proxybay.github.io/
+View mirror site: https://proxybay.pages.dev/
 
 View original site: https://proxy-bay.one/
 
