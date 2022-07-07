@@ -68,7 +68,7 @@ function submit_feedback(){
       }
     }
   };
-  xmlhttp.open("POST", "https://s.proxy-bay.one/pb_feedback_mail.php", true);
+  xmlhttp.open("POST", "https://s.proxy-bay.top/pb_feedback_mail.php", true);
   xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
   xmlhttp.send('email='+email+'&message='+message+'&captcharesponse='+captchaResponse);
 }
@@ -88,7 +88,7 @@ function submit_report(){
       }
     }
   };
-  xmlhttp.open("GET", "https://s.proxy-bay.one/pb_report.php?reportedUrl="+reportedUrl+'&feedbackVal='+feedbackVal, true);
+  xmlhttp.open("GET", "https://s.proxy-bay.top/pb_report.php?reportedUrl="+reportedUrl+'&feedbackVal='+feedbackVal, true);
   xmlhttp.send();
 }
 
