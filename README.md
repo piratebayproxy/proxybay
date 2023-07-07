@@ -2,5 +2,5 @@
 
 View mirror site: https://proxybay.pages.dev/
 
-View original site: https://proxy-bay.click/
+View original site: https://proxy-bay.mov/
 
