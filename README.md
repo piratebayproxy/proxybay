@@ -2,5 +2,5 @@
 
 View mirror site: https://proxybay.pages.dev/
 
-View original site: https://proxybay.unblockit.ing/
+View original site: https://proxybay.unblockit.date/
 
