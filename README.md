@@ -2,5 +2,5 @@
 
 View mirror site: https://proxybay.pages.dev/
 
-View original site: https://proxybay.unblockit.casa/
+View original site: https://proxybay.unblockit.sbs/
 
