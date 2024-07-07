@@ -2,5 +2,5 @@
 
 View mirror site: https://proxybay.pages.dev/
 
-View original site: https://proxybay.unblockit.black/
+View original site: https://proxybay.unblockit.meme/
 
